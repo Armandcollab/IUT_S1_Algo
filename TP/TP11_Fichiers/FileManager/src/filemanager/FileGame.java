@@ -15,15 +15,28 @@ class FileGame {
      * Chemin vers le fichier stockant le niveau.
      */
     final String FICHIER_NIVEAU = "ressources/game/result.txt";
-    
+
     /**
      * Déplacer le héros en fonction du mouvement donné en paramètre.
      *
      * @param mouvement mouvement : "m" pour avancer, "j" pour sauter
      * @return vrai ssi le héros est sorti
      */
-    boolean moveHero(String mouvement) {       
-        return false; // TODO
+    boolean moveHero(String mouvement) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(FICHIER_NIVEAU));
+            int posArro = br.readLine().indexOf('@');
+            int posSortie = br.readLine().indexOf('S');
+            int posTrou = br.readLine().indexOf('H');
+            BufferedWriter bw = new BufferedWriter(new FileWriter(FICHIER_NIVEAU));
+            if (mouvement == "m") {
+                
+            }
+
+        } catch (IOException e) {
+            System.out.println("Erreur à l'utilisation du fichier : " + e);
+        }
+        return false;
     }
 
     /**
@@ -47,7 +60,7 @@ class FileGame {
     /**
      * Afficher un niveau stocké dans le fichier.
      */
-    public  void displayLevel() {
+    public void displayLevel() {
         try (BufferedReader br = new BufferedReader(new FileReader(FICHIER_NIVEAU))) {
 
             String line;
