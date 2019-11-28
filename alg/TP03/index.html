@@ -1,0 +1,556 @@
+
+<!DOCTYPE html>
+<html>
+<title>TP 3  - Structures de contrôle et fonctions</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<link rel="stylesheet" href="http://www.informatics-tech.com/highlighter/prettify.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js' type='text/javascript'></script>
+<script src="http://www.informatics-tech.com/highlighter/prettify.js"></script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+<style>
+table tr th,td{
+  border:1px solid black;
+} 
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size:16px;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+.ajout-oga {background-color: green;}
+.todo-oga {background-color: red;}
+pre.enLigne{display: inline;}
+.nicho-modif{border-left: Lime 5px solid;padding-left: 5px;background: yellow;}
+.test th{width:300px;}
+</style>
+<body>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+  <div class="w3-container">
+    <h3 class="w3-padding-64"><b>IUT<br>Département-info</b></h3>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#exo1" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Jeu de dé</a> 
+    <a href="#exo2" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Températures</a> 
+    <a href="#exo3" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Exos supplémentaires</a> 
+    
+    
+  </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+  <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">&#9776;</a>
+  <span>Iut info BDX</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+
+  <!-- Header -->
+  <div class="w3-container" style="margin-top:80px" id="showcase">
+    <h1 class="w3-jumbo"><b>TP 3  - Structures de contrôle et fonctions</b></h1>
+    
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+  </div>
+  
+  <!-- Photo grid (modal) -->
+  <div class="w3-row-padding">
+    <div class="w3-half">
+    <p>
+Avant de commencer le TP, copiez (dans un dossier de votre répertoire personnel) les sketchs contenus dans le dossier <tt>code</tt>. Remarque : même si ce n’est pas mentionné explicitement sur la feuille de TP, vous réaliserez systématiquement cette
+opération à chaque début de nouveau TP.</p>
+
+
+  <h1 id="exo1" class="w3-jumbo"><b>Jeu de dé</b></h1>
+    
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <p>Un joueur réalise des tirages successifs avec un dé à 6 faces. Les faces sont numérotées de 1 à 6.
+    </p>
+    <p>
+<i>Règle</i> : le joueur lance le dé aussi longtemps qu’il ne tombe pas sur la face numérotée 1. Lorsque c’est le cas, le jeu
+s’arrête, et le score du joueur est affiché à l’écran.
+    </p>
+    <p>
+  Selon la version du jeu, le score sera soit la somme, soit la moyenne, soit la valeur de face
+maximum obtenue (<b>avant</b> la face 1, qui ne compte pas).</p>
+    </div>
+
+
+    <div class="w3-half">
+      <img src="img/fonctions.jpg">
+    </div>
+
+<h3>Prise en main du code fourni</h3>
+<p>
+  Ouvrez le sketch Processing fourni Sketch_TD03_Jeu_De. Vous obtenez 4 onglets :
+
+  <table>
+    <tr>
+      <td>Sketch_TD03_Jeu_De</td>
+      <td>c’est l’onglet principal, il contient toutes vos fonctions (calcul de score) et les fonctions setup(), mousePressed(), finSequence()</td>
+    </tr>
+    <tr>
+      <td>Graphisme</td>
+      <td>code pour la gestion du graphisme (vous ne modifierez pas ce code)</td>
+    </tr>
+    <tr>
+      <td>Tests</td>
+      <td>les fonctions de test</td>
+    </tr>
+    <tr>
+      <td>Z_Reponses</td>
+      <td>ne contient que du <b>texte</b> sous forme de commentaires = les réponses aux questions posées au fil
+du sujet (autre que le code), notamment les tableaux de tests à remplir</td>
+    </tr>
+  </table>
+Afin de pouvoir réaliser des tirages reproductibles et tester "à la main" les différentes fonctions de score, le tirage de dé ne fait pas
+  appel à la fonction random(), mais se présente sous la forme d'une interface
+  où le programmeur peut cliquer sur les faces d'un dé pour simuler une partie. 
+</p>
+
+    <img src="img/6_faces.png">
+    <a href="http://cliparts.co/clipart/2784115">Clip art image by Cliparts.co</a>  
+  </div>
+
+  <p>
+    Les variables <tt>nbJets</tt> et <tt>jets[]</tt> permettent de stocker respectivement le nombre de jets (clics sur une face) effectués, et de stocker les faces sélectionnées. La fonction <tt>mousePressed()</tt> s'occupe de les mettre à jour à chaque clic, et de lancer la fonction <tt>finSequence()</tt> lorsque la face 1 a été sélectionnée. La séquence s'affiche progressivement, ainsi que le score en fin de séquence.
+  </p>
+
+
+<h3>Exercice 1 : Score = Somme</h3>
+<p>
+Dans le code fourni, le score du joueur est calculé au fur et à mesure des tirages grâce à la fonction somme (écrite en TD) : elle tire un entier (en consultant les jets passés en paramètre) tant que ce dernier est différent de 1 et renvoie la somme des entiers tirés.
+Ce code est presque parfait... Il y a une toute petite erreur dans la fonction somme : vous allez la corriger !
+<ul>
+  <li>Exécutez le code (sans le corriger) et testez (en cliquant) les différents tableaux ci-dessous.
+    Remplissez le tableau de tests correspondant dans l’onglet Z_Reponses.</li>
+
+<table class="test">
+  <tr>
+    <th>Tests</th><th>Résultat(s) attendu(s)</th><th>Résultat(s) observé(s)</th>
+  </tr>
+  <tr>
+    <td>4 ;2 ;5 ;1</td><td></td><td></td>
+  </tr>
+     <tr>
+    <td>1</td><td></td><td></td>
+  </tr>
+  </table>
+  <li>Puis utilisez la fonction de test  <pre class="prettyprint enLigne">test_somme()</pre>  fournie dans l’onglet Tests : décommentez son appel dans la
+fonction <pre class="prettyprint enLigne">setup()</pre>, mettez des points d’arrêt, et résolvez les erreurs du code.</li>
+  <li>Remplissez alors le tableau de tests précédent une fois le code corrigé.
+  </li>
+</ul>
+</p>
+
+<h3>Exercice 2 : deux joueurs</h3>
+
+  <p>Nous allons rajouter un deuxième joueur.
+    Le jeu consiste alors à faire une première série de jets par le joueur 1,
+    puis une deuxième série par le joueur 2, puis à comparer les scores.
+    Observez le code, et effectuez les changements nécessaires :
+    <ul>
+	  <li>
+		dans les <b>déclarations de variables</b> :
+		<ul>
+		  <li>la variable <tt>joueurCourant</tt> contiendra le numéro du joueur courant (1 ou 2). Pas de modification à ce niveau.</li>
+		  <li>ajoutez les variables <tt>nbJets2</tt> et <tt>jets2[]</tt>, semblables aux variables <tt>nbJets1</tt> et <tt>jets1[]</tt>.
+		</ul>
+      </li>
+      <li><b>la fonction <tt>mousePressed()</tt></b> est appelée à chaque clic sur une face. Le jet est alors stocké, et l'affichage est mis à jour via <b>afficherJets</b>. Cette fonction doit donc être adaptée pour gérer le joueur 2, comme c'est déjà le cas pour le joueur 1. Si la face 1 est saisie, c'est alors la fonction <tt>finSequence()</tt> qui est appelée.</li>
+      <li><b>la fonction <tt>afficherJets()</tt></b> affiche la séquence de jets d'un joueur (passée en paramètre). Elle doit être adaptée pour gérer l'affichage du joueur 2, un peu plus bas que celle du joueur 1, et avec le numéro du joueur dans le texte</pre>.
+      </li>
+      <li><b>la fonction <tt>finSequence()</tt></b> gère la fin d'une séquence (celle du joueur 1 ou celle du joueur 2). Elle doit maintenant gérer deux cas :
+	<ol>
+	  <li>si le joueur courant était le joueur 1, on passe au joueur 2.
+	  <li>sinon, il faut :
+		<ul>
+		  <li>afficher les scores : <b>la fonction <tt>afficherScore()</tt></b> sera aussi adaptée gérer les deux joueurs.
+		  </li>
+		  <li>
+			déterminer l'éventuel vainqueur et l'afficher à l'écran (ou indiquer l'égalité le cas échéant). Pour cela, créez la fonction <pre class="prettyprint enLigne">void afficherVerdict(int scoreJoueur1, int scoreJoueur2)</pre>.
+		  </li>
+		  <li>
+			Puis recommencer une partie en remettant à zéro les nombres de jets, et en repassant au joueur 1.
+		  </li>
+	  </li>
+	</ol>
+      </li>
+<li>
+  L'enchaînement des traitements suite à un clic peut ainsi se représenter ainsi :
+  <img src="./img/exo2-mousePressed.svg"/>
+      </li>
+	  <li>Le rendu graphique doit être le suivant (la taille de la fenêtre ne change pas) :<br/>
+		<table>
+		  <tr>
+			<td>en cours de partie :</td>
+			<td><img src="img/JeuDe_2joueurs_1.png"></td>
+		  </tr>
+		  <tr>
+		    <td>en fin de partie :</td>
+		    <td><img src="img/JeuDe_2joueurs_2.png"></td>
+          </tr>
+		</table>
+	  </li>
+      <li>Proposez un tableau de tests pour couvrir les 3 cas possibles (victoire joueur 1, victoire joueur 2, égalité) et testez en mode interactif :
+<table class="test">
+  <tr>
+    <th>Tests</th><th>Résultat(s) attendu(s)</th><th>Résultat(s) observé(s)</th>
+  </tr>
+  <tr>
+    <td>j1 : ; j2 : ;</td><td></td><td></td>
+  </tr>
+     <tr>
+    <td>j1 : ; j2 : ;</td><td></td><td></td>
+  </tr>
+   <tr>
+    <td>j1 : ; j2 : ;</td><td></td><td></td>
+  </tr>
+  </table>
+      </li>
+    </ul>
+</p>
+
+
+
+<h3>Exercice 3 : Score = Moyenne</h3>
+
+<p>Le calcul du score change : c’est maintenant la moyenne des faces obtenues (avant la face 1) à la place de la somme.
+
+<ul>
+  <li>Écrivez la fonction <tt>moyenne</tt> qui renvoie la moyenne des
+entiers tirés. Il suffit pour cela de copier-coller la fonction <tt>somme()</tt>, modifier son prototype en <pre class="prettyprint enLigne">float moyenne(int[] seqJets)</pre> et
+adapter son contenu.</li>
+  <li>Utilisez maintenant cette fonction <tt>moyenne</tt> dans le <pre class="prettyprint enLigne">finSequence()</pre> pour le calcul du score des joueurs.</li>
+  <li>Écrivez et utilisez la fonction <pre class="prettyprint enLigne">test_moyenne()</pre>.</li>
+</ul>
+<table class="test">
+  <tr>
+    <th>Tests</th><th>Résultat(s) attendu(s)</th><th>Résultat(s) observé(s)</th>
+  </tr>
+  <tr>
+    <td>4 ; 2 ; 5 ; 1</td><td></td><td></td>
+  </tr>
+     <tr>
+    <td>1</td><td></td><td></td>
+  </tr>
+   <tr>
+    <td>...</td><td></td><td></td>
+  </tr>
+  </table>
+</p>
+
+<h3>Exercice 4 : Score = Maximum</h3>
+
+
+<p>Le calcul du score change à nouveau : c’est maintenant la valeur de face maximum obtenue (avant la face 1).
+
+<ul>
+  <Li>Écrivez la fonction <tt>maximum</tt> qui renvoie le maximum des
+entiers tirés. Il suffit pour cela de copier-coller la fonction somme(), modifier son prototype en <pre class="prettyprint enLigne">int maximum(int[] seqJets)</pre> et
+adapter son contenu.</Li>
+  <Li>Utilisez maintenant cette fonction <tt>maximum</tt> dans le <pre class="prettyprint enLigne">finSequence()</pre> pour le calcul du score des joueurs.</Li>
+  <Li>Écrivez et utilisez la fonction <pre class="prettyprint enLigne">test_maximum()</pre>.</Li>
+</ul>
+<table class="test">
+  <tr>
+    <th>Tests</th><th>Résultat(s) attendu(s)</th><th>Résultat(s) observé(s)</th>
+  </tr>
+  <tr>
+    <td>3 ; 5 ; 2 ; 1</td><td></td><td></td>
+  </tr>
+     <tr>
+    <td>1</td><td></td><td></td>
+  </tr>
+   <tr>
+    <td>6 ; 5 ; 2 ; 3 ; 1</td><td></td><td></td>
+  </tr>
+  <tr>
+    <td>3 ; 5 ; 2 ; 6 ; 1</td><td></td><td></td>
+  </tr>
+  </table>
+</p>
+
+<h3>Exercice 5 : Pour aller plus loin - Score = Suite croissante</h3>
+
+<p>La règle du jeu change ici complètement : le joueur lance le dé aussi longtemps qu’il obtient une face supérieure ou
+égale à la précédente. Dès qu’il obtient une face inférieure à la précédente, le jeu s’arrête. Le score est le nombre de
+faces successives croissantes obtenues.
+
+<ul>
+  <li>Écrivez la fonction <tt>suite()</tt> qui 
+renvoie le nombre d’entiers croissants successifs obtenus, à partir d'une séquence de jets. Il suffit pour cela de copier-coller la fonction <pre class="prettyprint enLigne">somme()</pre>,
+modifier son prototype en <pre class="prettyprint enLigne">int suite(int[] seqJets)</pre> et d'adapter son contenu.</li>
+  <li>Utilisez maintenant cette fonction <tt>suite()</tt> dans le <pre class="prettyprint enLigne">finSequence()</pre> pour le calcul du score des joueurs.</li>
+  <li>Écrivez et utilisez la fonction <pre class="prettyprint enLigne">test_suite()</pre>.</li>
+</ul>
+
+<table class="test">
+  <tr>
+    <th>Tests</th><th>Résultat(s) attendu(s)</th><th>Résultat(s) observé(s)</th>
+  </tr>
+  <tr>
+    <td>3 ; 5 ; 2</td><td></td><td></td>
+  </tr>
+     <tr>
+    <td>2 ; 2 ; 7 ; 2</td><td></td><td></td>
+  </tr>
+   <tr>
+    <td>....</td><td></td><td></td>
+  </tr>
+  
+  </table>
+
+
+</p>
+
+
+<h1 id="exo2" class="w3-jumbo"><b>Températures</b></h1>
+
+
+<h3>Exercice 6 : Températures</h3>
+<p>
+  Remarque : On n'utilise aucun tableau dans cet exercice. Créez un nouveau sketch Processing pour cet exercice (pas un onglet).
+</p>
+
+<p>
+  Nous allons exploiter les relevés de températures d’une station météo (ici, pour l’exercice, les valeurs seront aléatoires).
+Écrire une fonction qui, étant donné un nombre n, tire aléatoirement (entre -10 et 40) n valeurs de températures, puis
+affiche la température minimale, la température maximale et la moyenne des températures. Un prototype possible est
+le suivant : <pre class="prettyprint enLigne">void statsTemperatures(int n)</pre>
+
+
+<table class="test">
+  <tr>
+    <th>Tests</th><th>Résultat(s) attendu(s)</th><th>Résultat(s) observé(s)</th>
+  </tr>
+  <tr>
+    <td>n=3; t1=5; t2=3; t3=15</td><td></td><td></td>
+  </tr>
+     <tr>
+    <td>n=1; t1=35</td><td></td><td></td>
+  </tr>
+   <tr>
+    <td>n=0</td><td></td><td></td>
+
+  </tr>
+
+   <tr>
+    <td>n=2; t1=35; t2=-5</td><td></td><td></td>
+    
+  </tr>
+
+  <tr>
+    <td>n=-2; </td><td></td><td></td>
+    
+  </tr>
+
+  
+  </table>
+
+
+</p>
+
+
+<h1 id="exo3" class="w3-jumbo"><b>Exercices supplémentaires</b></h1>
+
+<p>La suite des exercices de cette séance de TP ne sont pas obligatoires à réaliser.</p>
+
+
+<h3>Exercice 7 : Afficher un intervalle</h3>
+<p>Écrire une fonction qui prend deux paramètres a et b entiers, et affiche les entiers qui sont compris entre a et b.
+Attention, a et b peuvent être donnés dans le désordre, commencez par les échanger au besoin.
+
+<table class="test">
+  <tr>
+    <th>Tests</th><th>Résultat(s) attendu(s)</th><th>Résultat(s) observé(s)</th>
+  </tr>
+  <tr>
+    <td>a=3; b=7</td><td></td><td></td>
+  </tr>
+     <tr>
+    <td>a=4; b=1</td><td></td><td></td>
+  </tr>
+   <tr>
+    <td>a=0; b=0</td><td></td><td></td>
+
+  </tr>
+
+
+  
+  </table>
+
+  </p>
+
+
+
+
+
+
+<h3>Exercice 8 : Minimum</h3>
+
+<p>
+<ul>
+  <Li>Écrire une fonction qui étant donnés deux entiers a et b renvoie le minimum des deux.
+Un prototype possible est le suivant : <pre class="prettyprint enLigne">int minimum(int a, int b)</pre>
+
+
+
+<table class="test">
+  <tr>
+    <th>Tests</th><th>Résultat(s) attendu(s)</th><th>Résultat(s) observé(s)</th>
+  </tr>
+  <tr>
+    <td>a=3; b=5</td><td></td><td></td>
+  </tr>
+     <tr>
+    <td>a=-1 ; b=-4</td><td></td><td></td>
+  </tr>
+   <tr>
+    <td>a=0; b=0</td><td></td><td></td>
+
+  </tr>
+
+
+  
+  </table>
+
+
+</Li>
+  <Li>Écrire une fonction qui, étant donnés quatre entiers a; b; c et d renvoie le minimum des quatre.
+Un prototype possible est le suivant :
+<pre class="prettyprint enLigne">int minimum4(int a, int b, int c, int d)</pre>
+
+<table class="test">
+  <tr>
+    <th>Tests</th><th>Résultat(s) attendu(s)</th><th>Résultat(s) observé(s)</th>
+  </tr>
+  <tr>
+    <td>a=3; b=5; c=5 ; d=-1</td><td></td><td></td>
+  </tr>
+     <tr>
+    <td>a=-1 ; b=-4 ; c=145 ; d=-10</td><td></td><td></td>
+  </tr>
+   <tr>
+    <td>a=0; b=0; c=0 ; d=0</td><td></td><td></td>
+  </tr>
+  </table>
+  </Li>
+</ul>
+
+</p>
+
+
+<h3>Exercice 8 : Équation du premier degré</h3>
+
+  <p>
+    Une équation du premier degré est une équation de la forme : ax + b = 0.
+  </p>
+
+  <p>
+    Écrire une fonction qui étant donnés a et b affiche la solution de l’équation. Un prototype possible est le suivant :
+    <pre class="prettyprint enLigne">void premierDegre(float a, float b)</pre>
+
+  <table class="test">
+  <tr>
+    <th>Tests</th><th>Résultat(s) attendu(s)</th><th>Résultat(s) observé(s)</th>
+  </tr>
+  <tr><td> a=3 ;  b=6 </td><td></td><td></td></tr>
+  <tr><td> a=3 ; b=-6 </td><td></td><td></td></tr>
+  <tr><td>a=-3 ; b=-6 </td><td></td><td></td></tr>
+  <tr><td> a=3 ;  b=0 </td><td></td><td></td></tr>
+  <tr><td> a=0 ;  b=6 </td><td></td><td></td></tr>
+</table>
+</p>
+
+  
+<h3>Exercice 9 : Équation du second degré</h3>
+
+<p>
+  
+  Une équation du second degré est une équation de la forme :
+a<var>x<sup>2</sup></var> + bx + c = 0</p>
+<p>
+Écrire une fonction qui étant donnés a; b et c affiche l’ensemble des solutions réelles de l’équation. Un prototype
+possible est le suivant :
+<pre class="prettyprint enLigne">void secondDegre(float a, float b, float c)</pre>
+</p>
+
+<p>Vous pourrez penser à utiliser la fonction premierDegre de l’exercice précédent pour les cas pertinents, et à définir
+une fonction
+<pre class="prettyprint enLigne">float discriminant(float a, float b, float c)</pre>
+
+<table class="test">
+  <tr>
+    <th>Tests</th><th>Résultat(s) attendu(s)</th><th>Résultat(s) observé(s)</th>
+  </tr>
+  <tr>
+    <td>a=3; b=6; c=0</td><td></td><td></td>
+  </tr>
+     <tr>
+    <td>a=0 ; b=0 ; c=0 ; </td><td></td><td></td>
+  </tr>
+   <tr>
+    <td>a=-3 ; b=-6 ; c=10</td><td></td><td></td>
+   </tr>
+</table>
+
+</p>
+
+</div>
+<!-- 
+<pre class="prettyprint">
+void nextStep()
+</pre>
+permettant de faire une itération du cycle de vie de la matrice.
+</p>
+
+<p>Si votre code est correct, la grille suivante devrait apparaitre</p>
+<p><img src="img/life1.png"></p>
+ -->
+
+</div>
+<!-- 
+<pre class="prettyprint">
+void nextStep()
+</pre>
+permettant de faire une itération du cycle de vie de la matrice.
+</p>
+
+<p>Si votre code est correct, la grille suivante devrait apparaitre</p>
+<p><img src="img/life1.png"></p>
+ -->
+
+</div>
+<div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px"><p class="w3-right">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></p></div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML =  element.alt;
+}
+</script>
+
+</body>
+</html>

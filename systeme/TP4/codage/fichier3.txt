@@ -1,0 +1,14 @@
+019abAB.*
+
+Il peut donc contenir des caractères accentués. 
+Par exemples:
+ - é 
+ - è
+ - à
+ - ù
+ - ...
+Mais aussi des caractères issus d'autres alphabets et symboles comme:
+ - кириллица
+ - 近期截稿的
+
+

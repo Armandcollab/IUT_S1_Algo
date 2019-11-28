@@ -1,0 +1,64 @@
+                    TP3: Jointures
+
+Première partie : jointures simples
+
+    Liste des éditeurs britanniques (5 lignes)
+            Requête SQL :
+            SELECT Editeur.Nom_Editeur, Pays.Nom_Pays
+            FROM Editeur
+            INNER JOIN Pays ON Editeur.Code_Pays = Pays.Code_Pays
+            WHERE Pays.Nom_Pays = 'Grande-Bretagne'
+
+    Liste des chefs d’orchestre (un chef d'orchestre est un musicien présent dans la table DIRECTION) (261 lignes)
+            Requête SQL : 
+            SELECT Direction.Code_Musicien
+            FROM Direction
+            INNER JOIN Musicien ON Direction.Code_Musicien = Musicien.Code_Musicien
+            GROUP BY Direction.Code_Musicien 
+
+    Liste des titres d’œuvres enregistrées par instrument (2 981 lignes)
+
+
+Deuxième partie : jointures et agrégation
+
+    Nombre de compositeurs allemands (59)
+            Requête SQL :
+            SELECT COUNT(DISTINCT(Composer.Code_Musicien)) as Nb_Musicien_Allemand
+            FROM Composer
+            INNER JOIN Musicien ON Composer.Code_Musicien = Musicien.Code_Musicien
+            INNER JOIN Pays ON Musicien.Code_Pays = Pays.Code_Pays
+            WHERE Pays.Nom_Pays ='Allemagne'
+
+    Nombre d’enregistrements par instrument, par ordre décroissant de ces nombres (40 lignes, 3379 enregistrements pour 'Soprano')
+            Requête SQL :
+            SELECT COUNT(DISTINCT (Enregistrement.Code_Enregistrement)) AS Nb_Enregistrement_Instrument, Nom_Instrument
+            FROM Enregistrement
+            INNER JOIN Interpréter ON Enregistrement.Code_Enregistrement = Interpréter.Code_Enregistrement
+            INNER JOIN Instrument ON Interpréter.Code_Instrument = Instrument.Code_Instrument
+            GROUP BY Nom_Instrument
+            ORDER BY Instrument.Nom_Instrument DESC
+
+    Liste des instruments présents dans plus de 300 enregistrements (12 lignes)
+            Requête SQL : 
+            SELECT COUNT(DISTINCT (Enregistrement.Code_Enregistrement)) AS Nb_Enregistrement_Instrument, Nom_Instrument
+            FROM Enregistrement
+            INNER JOIN Interpréter ON Enregistrement.Code_Enregistrement = Interpréter.Code_Enregistrement
+            INNER JOIN Instrument ON Interpréter.Code_Instrument = Instrument.Code_Instrument
+            GROUP BY Nom_Instrument HAVING COUNT(DISTINCT (Enregistrement.Code_Enregistrement)) >300 
+            ORDER BY Instrument.Nom_Instrument DESC
+
+
+Troisième partie : jointures
+
+    Liste des musiciens chinois (8 lignes)
+    Nombre de musiciens belges (33)
+    Nombre de musiciens par pays (50 lignes, 412 musiciens pour la France)
+    Nombre de musiciens homonymes, regroupés par pays et par nom de musicien (61 lignes, Haydn apparaît 3 fois en Allemagne)
+    Liste des compositeurs britanniques (19 lignes)
+    Noms des compositeurs allemands et liste de leurs œuvres classées par ordre alphabétique (1 297 lignes)
+    Nombre de compositions enregistrées par instrument (40 lignes, 823 compositions pour 'Baryton')
+    Liste des sonates de Beethoven par ordre alphabétique (39 lignes)
+    Titre des enregistrements ayant un pianiste comme interprète (1 782 lignes)
+    Chefs d'orchestre présents dans plus de 20 enregistrements (109 lignes)
+    Nombre d'enregistrements de la cantate BWV 82 (15)
+    Liste des musiciens ayant interprété des œuvres composées en 1707  (19 lignes)

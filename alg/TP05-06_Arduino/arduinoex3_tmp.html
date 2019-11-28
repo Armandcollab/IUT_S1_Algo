@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>arduinoex3.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<pre class="hljs"><code><div><span class="hljs-comment">// constantes</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> TAILLE_SEQUENCE = <span class="hljs-number">3</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> PIN_SON = <span class="hljs-number">8</span>; <span class="hljs-comment">// constante pour le pin du buzzer</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> PIN_LED[<span class="hljs-number">4</span>] = {<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>}; <span class="hljs-comment">// pins des LED 0 à 3</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> FREQ_SON[<span class="hljs-number">4</span>] = {<span class="hljs-number">261</span>, <span class="hljs-number">329</span>, <span class="hljs-number">392</span>, <span class="hljs-number">523</span>}; <span class="hljs-comment">// tableau des fréquences de son</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> DUREE = <span class="hljs-number">250</span>; <span class="hljs-comment">// temps pour l'allumage des LED</span>
+
+<span class="hljs-comment">// valeurs des boutons calculées en fonction</span>
+<span class="hljs-comment">// du cablage (car toutes cablées sur A0)</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> BOUTON1=<span class="hljs-number">1023</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> BOUTON2=<span class="hljs-number">1001</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> BOUTON3=<span class="hljs-number">980</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> BOUTON4=<span class="hljs-number">960</span>;
+
+<span class="hljs-comment">// les différents modes</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> DEBUT = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> AUGM_SEQ_SIMON = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> JOUE_SEQ_SIMON = <span class="hljs-number">2</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> SAISIE_JOUEUR = <span class="hljs-number">3</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> VICTOIRE = <span class="hljs-number">4</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> ECHEC = <span class="hljs-number">5</span>;
+
+<span class="hljs-comment">// variables</span>
+<span class="hljs-keyword">int</span> reponse;
+<span class="hljs-keyword">int</span> mode = DEBUT; <span class="hljs-comment">// mode dans le programme</span>
+<span class="hljs-keyword">int</span> tailleSeqSimon = <span class="hljs-number">0</span>; <span class="hljs-comment">// taille de la séquence à deviner</span>
+<span class="hljs-keyword">int</span> tailleSeqJoueur = <span class="hljs-number">0</span>; <span class="hljs-comment">// taille de la réponse du joueur</span>
+<span class="hljs-keyword">int</span> sequenceSimon[TAILLE_SEQUENCE] = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>};
+<span class="hljs-keyword">int</span> sequenceJoueur[TAILLE_SEQUENCE] = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>};
+
+<span class="hljs-keyword">void</span> <span class="hljs-built_in">setup</span>() {
+  <span class="hljs-built_in">Serial</span>.<span class="hljs-built_in">begin</span>(<span class="hljs-number">9600</span>);
+  <span class="hljs-comment">// rédaction de vos tests unitaires</span>
+  <span class="hljs-built_in">Serial</span>.<span class="hljs-built_in">println</span>(<span class="hljs-string">"tests : debut"</span>);
+  <span class="hljs-comment">/*
+  ajouteReponse(0);
+  ajouteReponse(2);
+  ajouteReponse(1);
+  ajouteReponse(2);
+  */</span>
+  <span class="hljs-comment">/*
+  for (int i = 0; i &lt; 4; i++) {
+  Serial.println(sequenceJoueur[i]);
+  }
+  */</span>
+  tailleSeqSimon = <span class="hljs-number">3</span>;
+  tailleSeqJoueur = <span class="hljs-number">3</span>;
+  <span class="hljs-built_in">Serial</span>.<span class="hljs-built_in">println</span>(perdu());
+  
+  
+  <span class="hljs-built_in">Serial</span>.<span class="hljs-built_in">println</span>(<span class="hljs-string">"tests : fin"</span>);
+  <span class="hljs-built_in">randomSeed</span>(<span class="hljs-built_in">analogRead</span>(<span class="hljs-number">1</span>)); <span class="hljs-comment">// initialisation des nombres aleatoires</span>
+    <span class="hljs-comment">/*
+  for (int i = 0; i &lt; 4; i++) {
+  	augmenteSequenceSimon();
+  }
+  for (int i = 0; i &lt; 4; i++) {
+  	Serial.println(sequenceSimon[i]);
+  }
+  */</span>
+  <span class="hljs-comment">/*
+     passages des pins en mode OUTPUT
+  */</span>
+  <span class="hljs-built_in">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i &lt; <span class="hljs-number">6</span>; i++) {
+    <span class="hljs-built_in">pinMode</span>(i, <span class="hljs-literal">OUTPUT</span>);
+  }
+  <span class="hljs-built_in">pinMode</span>(PIN_SON, <span class="hljs-literal">OUTPUT</span>);
+}
+
+<span class="hljs-keyword">void</span> <span class="hljs-built_in">loop</span>() {
+  <span class="hljs-comment">// les actions sont réalisées en fonction du mode en cours</span>
+  <span class="hljs-built_in">switch</span> (mode) { 
+    <span class="hljs-built_in">case</span> DEBUT: <span class="hljs-comment">// mode de démarrage (séquence lumineuse pré-enregistrée)</span>
+      start(); 
+      tailleSeqSimon = <span class="hljs-number">0</span>; <span class="hljs-comment">// on met la séquence à 0</span>
+      mode = AUGM_SEQ_SIMON; <span class="hljs-comment">// on peut passer au mode suivant</span>
+      <span class="hljs-built_in">break</span>;
+    <span class="hljs-built_in">case</span> AUGM_SEQ_SIMON: <span class="hljs-comment">// mode de tirage d'une nouvelle séquence</span>
+      augmenteSequenceSimon(); <span class="hljs-comment">//appel de la fonction pour allonger la séquence aléatoirement</span>
+      <span class="hljs-built_in">if</span> (tailleSeqSimon &lt; TAILLE_SEQUENCE)
+      	mode = JOUE_SEQ_SIMON; <span class="hljs-comment">// on peut passer au mode suivant</span>
+      <span class="hljs-built_in">else</span>
+        mode = VICTOIRE; <span class="hljs-comment">// on a gagné car on est arrivé à reproduire TAILLE_SEQUENCE sans se tromper</span>
+      <span class="hljs-built_in">break</span>;
+    <span class="hljs-built_in">case</span> JOUE_SEQ_SIMON: <span class="hljs-comment">// mode d'écoute de la séquence</span>
+      joueSequenceSimon(); <span class="hljs-comment">// on joue la séquence en cours</span>
+      tailleSeqJoueur = <span class="hljs-number">0</span>; <span class="hljs-comment">// on initialise la position de réponse à chaque tour (il faut refaire toutes les notes)</span>
+      mode = SAISIE_JOUEUR; <span class="hljs-comment">// on peut passer au mode suivant</span>
+      <span class="hljs-built_in">break</span>;
+    <span class="hljs-built_in">case</span> SAISIE_JOUEUR: <span class="hljs-comment">// mode de réponse du joueur</span>
+      reponse = testBouton(); <span class="hljs-comment">// on appelle la fonction de lecture des boutons</span>
+      ajouteReponse(reponse);
+      <span class="hljs-built_in">if</span> (!perdu()){ <span class="hljs-comment">// si le son qui vient d'être tapé est le bon</span>
+        <span class="hljs-built_in">if</span> (tailleSeqJoueur == tailleSeqSimon) { <span class="hljs-comment">// si c'était le dernier</span>
+          mode = AUGM_SEQ_SIMON; <span class="hljs-comment">// on revient en sequence 1 car toute la séance est ok et donc ajout d'un son en plus  </span>
+        }
+      } <span class="hljs-built_in">else</span> {
+        mode = ECHEC;
+      }
+      <span class="hljs-built_in">break</span>;
+    <span class="hljs-built_in">case</span> VICTOIRE: <span class="hljs-comment">// jeu gagné on fait une petite séquence de victoire</span>
+    	valide();
+    	mode = DEBUT;
+    	<span class="hljs-built_in">break</span>;
+    <span class="hljs-built_in">case</span> ECHEC: <span class="hljs-comment">// jeu perdu on fait une petite séquence de défaite</span>
+	    lost();
+	    mode = DEBUT;
+    	<span class="hljs-built_in">break</span>;
+  }
+}
+
+
+<span class="hljs-comment">// ajoute une réponse dans le tableau sequenceJoueur</span>
+<span class="hljs-keyword">void</span> ajouteReponse(<span class="hljs-keyword">int</span> reponse){
+    sequenceJoueur[tailleSeqJoueur] = reponse; <span class="hljs-comment">// intégrer reponse dans la dernière case libre du tableau</span>
+    tailleSeqJoueur++; <span class="hljs-comment">// augmenter la taille de la séquence de réponse</span>
+}
+
+<span class="hljs-comment">// son et lumière pour le démarrage d'une nouvelle séquence</span>
+<span class="hljs-keyword">void</span> start() {
+  <span class="hljs-built_in">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+    sonLum(i, <span class="hljs-number">300</span>);
+  }
+}
+
+<span class="hljs-comment">// son et lumière pour valider une suite de réponses</span>
+<span class="hljs-keyword">void</span> valide() {
+  sonLum(<span class="hljs-number">0</span>, <span class="hljs-number">100</span>);
+  sonLum(<span class="hljs-number">2</span>, <span class="hljs-number">100</span>);
+  sonLum(<span class="hljs-number">1</span>, <span class="hljs-number">100</span>);
+  sonLum(<span class="hljs-number">3</span>, <span class="hljs-number">100</span>);
+  sonLum(<span class="hljs-number">1</span>, <span class="hljs-number">50</span>);
+  sonLum(<span class="hljs-number">2</span>, <span class="hljs-number">50</span>);
+  sonLum(<span class="hljs-number">3</span>, <span class="hljs-number">100</span>);
+}
+
+<span class="hljs-comment">// son et lumière pour signaler la défaite </span>
+<span class="hljs-keyword">void</span> lost() {
+   <span class="hljs-built_in">for</span> (<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">4</span>; ++i) {
+    <span class="hljs-built_in">digitalWrite</span>(PIN_LED[i], <span class="hljs-literal">HIGH</span>);
+   }
+   <span class="hljs-built_in">tone</span>(PIN_SON,<span class="hljs-number">65</span>,<span class="hljs-number">200</span>);  
+   <span class="hljs-built_in">delay</span>(<span class="hljs-number">200</span>);
+   <span class="hljs-built_in">for</span> (<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">4</span>; ++i) {
+     <span class="hljs-built_in">digitalWrite</span>(PIN_LED[i], <span class="hljs-literal">LOW</span>);
+   }
+}
+
+<span class="hljs-comment">// fonction qui compare la réponse avec la séquence en cours et retourne vrai si perdu</span>
+<span class="hljs-keyword">bool</span> perdu () {
+  <span class="hljs-keyword">int</span> pos = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">bool</span> lost = false;
+  <span class="hljs-built_in">while</span> (pos &lt;= tailleSeqSimon &amp;&amp; tailleSeqJoueur == tailleSeqSimon &amp;&amp; !lost)
+  {
+    <span class="hljs-built_in">if</span> (sequenceJoueur[pos] == sequenceSimon[pos]) 
+      ++pos;
+    <span class="hljs-built_in">else</span>
+      lost = true;
+  }
+  <span class="hljs-built_in">return</span> lost;
+}
+
+<span class="hljs-comment">// fonction qui allume une LED (l) en jouant le son associé pendant une durée (d)</span>
+<span class="hljs-keyword">void</span> sonLum(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> d) {
+  <span class="hljs-built_in">if</span> ( l &gt;=<span class="hljs-number">0</span> &amp;&amp; l&lt;= <span class="hljs-number">4</span>){
+  	<span class="hljs-built_in">digitalWrite</span>(PIN_LED[l], <span class="hljs-literal">HIGH</span>);
+  	<span class="hljs-built_in">tone</span>(PIN_SON, FREQ_SON[l], d);
+  	<span class="hljs-built_in">delay</span>(d+<span class="hljs-number">50</span>);
+  	<span class="hljs-built_in">digitalWrite</span>(PIN_LED[l], <span class="hljs-literal">LOW</span>);
+  	<span class="hljs-built_in">delay</span>(d+<span class="hljs-number">50</span>);
+  }
+  <span class="hljs-built_in">else</span> {
+   <span class="hljs-built_in">Serial</span>.<span class="hljs-built_in">println</span>(<span class="hljs-string">'erreur'</span>);
+  }
+}
+
+<span class="hljs-comment">// fonction de tirage aléatoire d'un nouvel élément</span>
+<span class="hljs-keyword">void</span> augmenteSequenceSimon() {
+    <span class="hljs-built_in">if</span> (tailleSeqSimon &lt; TAILLE_SEQUENCE) {
+    	sequenceSimon[tailleSeqSimon] = <span class="hljs-built_in">random</span>(<span class="hljs-number">0</span>,<span class="hljs-number">4</span>) ; <span class="hljs-comment">// permet un tirage mieux réparti</span>
+  }
+  tailleSeqSimon++;
+}
+
+<span class="hljs-comment">// fonction qui joue la séquence en cours</span>
+<span class="hljs-keyword">void</span> joueSequenceSimon() {
+  <span class="hljs-built_in">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; tailleSeqSimon; i++) {
+  sonLum(sequenceSimon[i], <span class="hljs-number">500</span>);
+  }
+}
+
+<span class="hljs-comment">// fonction qui attend l'appuie sur un des boutons, l'allume+son et retourne le numéro de bouton</span>
+<span class="hljs-keyword">int</span> testBouton() {
+  <span class="hljs-keyword">bool</span> <span class="hljs-built_in">end</span> = false;
+  <span class="hljs-keyword">int</span> bouton;
+  <span class="hljs-built_in">while</span>(!<span class="hljs-built_in">end</span>){
+    bouton = <span class="hljs-built_in">analogRead</span>(A0); <span class="hljs-comment">// on lit la valeur de A0.</span>
+    <span class="hljs-built_in">switch</span> (bouton) {
+      <span class="hljs-built_in">case</span> BOUTON1:
+        <span class="hljs-built_in">end</span> = true;
+        bouton = <span class="hljs-number">0</span>;
+        <span class="hljs-built_in">break</span>;
+      <span class="hljs-built_in">case</span> BOUTON2:
+        <span class="hljs-built_in">end</span> = true;
+        bouton = <span class="hljs-number">1</span>;
+        <span class="hljs-built_in">break</span>;
+      <span class="hljs-built_in">case</span> BOUTON3:
+        <span class="hljs-built_in">end</span> = true;
+        bouton = <span class="hljs-number">2</span>;
+        <span class="hljs-built_in">break</span>;
+      <span class="hljs-built_in">case</span> BOUTON4:
+        <span class="hljs-built_in">end</span> = true;
+        bouton = <span class="hljs-number">3</span>;
+        <span class="hljs-built_in">break</span>;
+      <span class="hljs-built_in">default</span>:
+        <span class="hljs-built_in">break</span>;
+    }
+  }
+  sonLum(bouton, DUREE);
+  <span class="hljs-built_in">return</span> bouton;
+}
+</div></code></pre>
+
+</body>
+</html>

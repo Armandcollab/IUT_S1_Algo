@@ -1,0 +1,219 @@
+# I Fonctionnement d'un Terminale #
+ 
+ 1. saisie de la commande
+ 2. interpreter la commande
+ 3. executer la commande \
+(boule)
+    
+    
+        >prompt: man (commande)
+
+manuelle commande ```man```
+
+option courte : en bleu \
+**...** de 0 a ++ 
+
+- \-lettre
+- \-- mot
+
+> on peut regrouper les -l -a -r en -lar
+
+### recherche dans manuelle ##
+
+
+    man geany
+
+    /version
+    n
+    n
+    N
+
+**/** pour rechercher \
+**n** pour passer a l'occurence suivante
+
+## Auto completion ##
+
+touche **tabulation** :
+
+- si ambiguité ```tab tab```
+- sinon simple ```tab```
+
+
+## Navigation dans le repertoire ##
+
+- où je suis ```pwd```
+- voire le contenue ```ls```
+- *acceder* au fichier ```cd```
+- creer un dossier vide ```touch```
+- *creer* un reépertoire ```mkdir``` 
+
+  
+> -p pour creer un repertoir de chemin
+
+- *supprimer* un répertoire ```rmdir```
+- *déplacer* et *renommer* un dossier ```mv```
+  
+- afficher le contenue :
+  - d'un petit fichier ```cat```
+  - d'un gros fichier ```less```
+
+# II MetatCharactères #
+
+- " **```*```** " emplace n'importe quelle chaine de charactères
+
+- " **```?```** " remplace n'importe quelle caractère
+  
+- " **```[]```** " liste de charactère
+  - " **```[a-c]```** " lise de charactère entre a et c
+  - " **```[abc]```** " lise de charactère a b ou c
+
+
+
+#########scp######ssh##########
+
+# **I processus** #
+
+```
+entrée standard(clavier) --> processus ----->sortie standard(terminal) 
+                                | 
+                                 ------> sortie d'erreur(terminal)
+```
+
+## changer de sortie ##
+
+- utilisation ">" \
+redirige la sortie standard vers un .txt 
+```
+ls ~>/tmp/ls.txt
+```
+
+- utilisation ">>" \
+ajoute après ce qui est deja écrit dans un txt
+```
+ls ~>>/tmp/ls.txt
+```
+
+
+## changer d'entrée ##
+
+- utilisation "<"
+```
+bc <bc.txt "
+```
+
+## gestion de sortie vers une entré d'un autre processus ##
+
+' **|** ' 
+```
+ls -l ~|wc -l 
+```
+
+> On peut faire un *pipe line de commande* (mettre plusieurs pipe à la suite)
+
+exemple :
+```
+anytopnm < Capture.png | pnmscale -pixels 100 | pnmtojpeg > sauvegarde.jpeg
+```
+
+## sortie d'erreur ##
+
+**2>** le deux correspond à la sortie d'erreur
+> javac test.java 2> bug.txt
+
+    
+## encodage de caractère ##
+
+code **ascii** : 
+- 7 bites (taille fixe)
+- américains (pas accents...)
+
+code **UTF-8** : 
+- touts les caractères
+- prend plus de place 
+  - vérification sur le premier bit de chaue octet si il faut contnuer sur l'octet suivant
+  - taille variable en otet
+- diificulté pour aller au n éme caractère ( blogation de lire tout les caractères)
+
+
+# **Permissions** #
+
+= droits d'accés
+
+3 catégories d'utilisateurs : 
+- propriétaires / user **```u```** 
+- groupe / group **```g```** 
+- autres / others **```o```** 
+
+9 droits droits :
+- lecture / read **```r```** 
+- écriture / write **```w```** 
+- éxecution **```x```**
+
+ex : ```ls -l```
+- premier caractère " " 
+- neuf caractères " r w x " ( ou --- )
+  - trois premier **propriétaires**
+  - trois suivants **groupe**
+  - trois suivants **autres**
+
+stocké en nombre ( base 8 ) parce que 2³ possibilité de droit par catégorie
+
+> rw-r--r-- \
+> 644
+
+## Modifier les droits ##
+
+> chmod (nbr ex : 644) fichier
+
+chmod adaptable au -r
+
+> chmod (symbole,symbole,symbole) fichier
+
+utilisateur | modification | droits
+|:------------:|:--------------:|:----------:|
+u | + | r
+g | - | w
+o | = | x
+a |   |
+
+> chown login fichier 
+
+change le propriétaires
+
+> chgrp groupe fichier
+
+change le groupe
+
+
+## Liste à controle d'accés ##
+
+permet de donner des droits précis à un utilisateur précis 
+
+Petit + après les droits rwx ( donc indique que c'est *acl* qui contrôle les droits et pas *unix* )
+
+trois premiers : mes droits \
+trois suivants : les droits que je peut donner \
+trois derniers : les droits pour les autres
+
+> getfacl fichier
+
+donne les droits du fichier
+
+> setfacl -n u:login:rwx fichier
+
+donner un droit (m = modifier)
+
+
+## chifre un ficier ##
+ccrypt
+
+> ccrypt -e monfichier 
+
+oppenssl 
+- mdp
+- clé pub/pri
+
+# ***notes*** #
+```
+ctrl + d (quiter)
+```

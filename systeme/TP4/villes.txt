@@ -1,0 +1,25 @@
+france:bordeaux
+suede:goteborg
+france:paris
+allemagne:bonn
+inde:delhi
+italie:roma
+vietnam:hanoi
+italie:turin
+tunisie:sfax
+pays-bas:amsterdam
+espagne:grenade
+belgique:liege
+belgique:bruxelles
+suisse:lausanne
+espagne:barcelone
+pays-bas:rotterdam
+tunisie:tunis
+islande:reykjavik
+danemark:copenhague
+vietnam:ho chi minh
+allemagne:berlin
+italie:rome
+italie:pise
+italie:milan
+espagne:madrid

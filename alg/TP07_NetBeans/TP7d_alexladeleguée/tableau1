@@ -1,0 +1,75 @@
+ant -f /mnt/roost/users/alaudebert/S1/programmation/TP7/tableaux -Dnb.internal.action.name=run run
+init:
+Deleting: /mnt/roost/users/alaudebert/S1/programmation/TP7/tableaux/build/built-jar.properties
+deps-jar:
+Updating property file: /mnt/roost/users/alaudebert/S1/programmation/TP7/tableaux/build/built-jar.properties
+Compiling 1 source file to /mnt/roost/users/alaudebert/S1/programmation/TP7/tableaux/build/classes
+compile:
+run:
+Contenu du tableau :
+
+ 0. Sortir
+ 1. Saisie d'un tableau quelconque
+ 2. Saisie d'un tableau en le triant
+11. Recherche séquentielle d'un élément
+12. Suppression d'un élément
+13. Ajout d'un élément
+21. Recherche séquentielle d'un élément dans un tableau trié
+22. Recherche dichotomique d'un élément
+23. Suppression d'un élément dans un tableau trié
+24. Ajout d'un élément dans un tableau trié
+Votre choix : 1
+Entrez la taille (entre 1 et 100) :
+1
+Entrez les éléments :
+2
+Contenu du tableau :
+2 
+ 0. Sortir
+ 1. Saisie d'un tableau quelconque
+ 2. Saisie d'un tableau en le triant
+11. Recherche séquentielle d'un élément
+12. Suppression d'un élément
+13. Ajout d'un élément
+21. Recherche séquentielle d'un élément dans un tableau trié
+22. Recherche dichotomique d'un élément
+23. Suppression d'un élément dans un tableau trié
+24. Ajout d'un élément dans un tableau trié
+Votre choix : 1
+Entrez la taille (entre 1 et 100) :
+4
+Entrez les éléments :
+2
+3
+4
+5
+Contenu du tableau :
+2 3 4 5 
+ 0. Sortir
+ 1. Saisie d'un tableau quelconque
+ 2. Saisie d'un tableau en le triant
+11. Recherche séquentielle d'un élément
+12. Suppression d'un élément
+13. Ajout d'un élément
+21. Recherche séquentielle d'un élément dans un tableau trié
+22. Recherche dichotomique d'un élément
+23. Suppression d'un élément dans un tableau trié
+24. Ajout d'un élément dans un tableau trié
+Votre choix : 11
+
+Élement à rechercher dans le tableau : 
+5
+L'élement 5 est à la position 3
+Contenu du tableau :
+2 3 4 5 
+ 0. Sortir
+ 1. Saisie d'un tableau quelconque
+ 2. Saisie d'un tableau en le triant
+11. Recherche séquentielle d'un élément
+12. Suppression d'un élément
+13. Ajout d'un élément
+21. Recherche séquentielle d'un élément dans un tableau trié
+22. Recherche dichotomique d'un élément
+23. Suppression d'un élément dans un tableau trié
+24. Ajout d'un élément dans un tableau trié
+Votre choix : 

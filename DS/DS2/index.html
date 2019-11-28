@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<title>TP noté / tableaux</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<link rel="stylesheet" href="http://www.informatics-tech.com/highlighter/prettify.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js' type='text/javascript'></script>
+<script src="http://www.informatics-tech.com/highlighter/prettify.js"></script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+<style>
+table tr th,td{
+  border:1px solid black;
+  padding: 6px;
+} 
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size:16px;}
+.drapeau td {text-align:center;width:10%;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+.ajout-oga {background-color: green;}
+.todo-oga {background-color: red;}
+pre.enLigne{display: inline;}
+.nicho-modif{border-left: Lime 5px solid;padding-left: 5px;background: yellow;}
+p {display: inline-block;}
+/* Keyboard key style */
+kbd{
+	font-size:0.7em;
+	border:1px solid gray;
+	box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;
+	border-radius:3px;
+	margin:2px 3px;
+	padding:1px 5px;
+}
+
+</style>
+<body>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:250px;font-weight:bold;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+  <div class="w3-container">
+    <h3 class="w3-padding-64"><b>IUT Info Bdx</b></h3>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#Q1" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Question 1</a> 
+    <a href="#Q2" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Question 2</a> 
+    <a href="#Q3" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Question 3</a> 
+    <a href="#Q4" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Question 4</a> 
+    <a href="#Q5" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Question 5</a> 
+    <a href="#Q6" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Question 6</a> 
+    <a href="#Q7" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Question 7</a> 
+    <a href="#Q8" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Question 8</a> 
+    <a href="#Q9" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Question 9</a> 
+    <a href="#Q10" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Question 10</a>     
+    <a href="#Q11" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Question bonus</a>     
+  </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+  <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">&#9776;</a>
+  <span>IUT info BDX</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+
+  <!-- Header -->
+	<div class="w3-container"  id="intro" style="margin-top:80px">
+    <h1 class="w3-jumbo"><b>Devoir machine</b></h1>
+    <h1 class="w3-xxxlarge w3-text-red"><b>1h15 <br>Internet et documents interdits</b></h1>
+    <hr style="width:500px;border:5px solid red" class="w3-round">
+  </div>
+  
+  <!-- Introduction -->
+	<div  class="w3-row-padding">
+
+	  <h2>Consignes</h2>
+
+<p> 
+  Commencez par copier sur votre compte le dossier <tt>sketch_etoiles</tt>
+  depuis la Bibliotheque, comme pour un TP.
+  Vous travaillerez uniquement dans ce sketch, dans le fichier
+  <tt>sketch_etoiles.pde</tt>.
+</p>
+	  <p><b>À la fin de la séance</b> déposez votre fichier <tt>sketch_etoiles.pde</tt> <b>non zippé</b>
+		dans <a href="https://moodle1.u-bordeaux.fr/mod/assign/view.php?id=136069">cette remise sur Moodle</a>. Après ce dépôt, nous vous conseillons de télécharger ce que vous avez déposé pour vérifier qu'il s'agit bien de votre code modifié.
+<p><b>Pensez à sauvegarder votre code fréquemment.</b> Le code déposé doit compiler : si certaines parties de votre code ne compilent pas, commentez-les.</p>
+
+	  <p><b>Très important</b> : chaque question peut être traitée de manière indépendante. Si une fonction ne donne pas le résultat escompté (voire même ne compile pas), ne restez pas coincés ! Avancez ! Les questions ne sont pas présentées par ordre de difficulté croissant.</p>
+
+	  <p>
+		À côté de chaque numéro de question vous trouverez un indicateur de sa difficulté (estimée...) :
+		<ul>
+		  <li>* : facile</li>
+		  <li>** : ça va</li>
+		  <li>*** : il faut commencer à réfléchir</li>
+		</ul>
+	  </p>
+
+  </div>
+
+	<div class="w3-container" id="rappels" style="margin-top:75px">
+	  <h1 class="w3-xxxlarge w3-text-red">
+		<b>Les bonnes étoiles</b>
+	  </h1>
+	  <hr style="width:50px;border:5px solid red" class="w3-round"> 
+	
+
+	<div class="w3-half">
+
+	  <h2>Règles</h2>
+
+	  <p>
+		Nous allons développer un petit jeu, dont le but est de guider
+		un vaisseau spatial.
+		Celui-ci peut rencontrer trois types d'étoiles :
+		<ul>
+		  <li>les étoiles vertes rapportent 1 point (le score augmente d'un point)&nbsp;;</li>
+		  <li>les étoiles rouges coûtent 1 point (le score diminue d'un point)&nbsp;</li>
+		  <li>les étoiles blanches sont neutres : elles ne modifient pas le score.</li>
+		</ul>
+		Au début du jeu, le score est à zéro. Il peut devenir négatif
+		dès que le vaisseau a touché plus d'étoiles rouges que de vertes.
+	  </p>
+	</div>
+	
+    <div class="w3-half">
+      <img src="img/icarusii.jpg" alt="exam java iut"/>
+	  <p>Sunshine, (c) DNA Films 2007</p>
+    </div>
+
+	  <h2 style="clear: both;">Une première version </h2>
+
+	  <p>
+		Une première version du jeu vous est fournie. Lancez-la.
+		Cette version contient certains bugs,
+		et certaines fonctionnalités manquent.
+		Nous allons analyser cela dans les questions ci-dessous.
+	  </p>
+
+	  <p>
+		Remarque : ne vous basez pas sur l'animation "étoile grossie" pour
+		voir si une étoile a touché le vaisseau. Cette animation n'est pas
+		toujours visible, surtout à des framerates élevés. Basez-vous plutôt
+		sur le score, et l'affichage de la dernière étoile touchée
+		(en console et dans le jeu).
+	  </p>
+
+	  <p>
+		D'autre part, un autre mode d'affichage est disponible,
+		si vous ne distinguez pas bien les couleurs.
+		Il suffit de remplacer l'appel <tt>dessinerEtoile(i)</tt> par
+		<tt>dessinerEtoileAvecFormes(i)</tt>.
+		Cela ne change rien aux questions ci-dessous.
+	  </p>
+
+	  <p>
+		Pour débugger, outre l'utilisation du debuggeur, vous pouvez aussi :
+		<ul>
+		  <li>ralentir le jeu en modifiant le frameRate (dans <tt>setup()</tt>).</li>
+		  <li>modifier le nombre d'étoiles en changeant la valeur de la constante <tt>NB_ETOILES</tt>.
+		</ul>
+	  </p>
+
+	  <h2>Stockage des étoiles</h2>
+	  <p>
+	  Chaque étoile se caractérise par 3 informations : ses coordonnées x et y, et sa couleur. Elles sont stockées dans 3 tableaux.
+	  Ainsi <pre class="enLigne prettyprint prettyprinted" style=""><span class="pln">xEtoile[7]</span></pre> est la coordonnée <tt>x</tt> de l'étoile numéro 7. Les couleurs sont codées par des entiers entre 0 et 2, mais dans tout le code on utilisera les constantes <pre class="enLigne prettyprint prettyprinted" style=""><span class="pln">ETOILE_BLANCHE</span></pre>, etc.
+	  <pre class="prettyprint">
+// étoiles
+final int NB_ETOILES = 100;
+int[] xEtoile = new int[NB_ETOILES];
+int[] yEtoile = new int[NB_ETOILES];
+int[] couleurEtoile = new int[NB_ETOILES];
+
+// constantes pour les couleurs des étoiles
+final int ETOILE_BLANCHE = 0;
+final int ETOILE_VERTE = 1;
+final int ETOILE_ROUGE = 2;</pre>
+	  </p>
+	  <p>Notez que la coordonnée <tt>x</tt> du vaisseau est
+		une constante (<tt>X_VAISSEAU</tt>) alors que sa coordonnée <tt>y</tt>
+		est une variable (<tt>yVaisseau</tt>) :
+		le vaisseau ne bouge pas horizontalement sur l'écran.
+		Cela sera le cas dans toutes les questions.
+		</p>
+	  
+		<h1 id="Q1" class="w3-xxxlarge w3-text-red"><b>Question 1 *</b></h1>
+		<h2>(1 point)</h2>
+		<hr style="width:50px;border:5px solid red" class="w3-round">
+		<p>Écrivez la documentation javadoc de la fonction &nbsp; <pre class="enLigne prettyprint prettyprinted" style=""><span class="pln">void dessinerEtoile(int i)</span></pre> qui dessine l'étoile numéro i.</p>
+
+		<h1 id="Q2" class="w3-xxxlarge w3-text-red"><b>Question 2 *</b></h1>
+		<h2>(1 point)</h2>
+		<hr style="width:50px;border:5px solid red" class="w3-round">
+	    <p>
+		  Il y a un bug dans la gestion des touches :
+		  lorsqu'on appuie sur la flèche "bas", le vaisseau monte,
+		  et inversement. Corrigez ce bug.
+		</p>
+
+		<h1 id="Q3" class="w3-xxxlarge w3-text-red"><b>Question 3 *</b></h1>
+		<h2>(1 point)</h2>
+		<hr style="width:50px;border:5px solid red" class="w3-round">
+	    <p>
+		  Il y a un bug dans l'initialisation des étoiles :
+		  aucune étoile n'est générée sur la moitié basse de l'écran.
+		  Corrigez ce bug.
+		</p>
+
+		<h1 id="Q4" class="w3-xxxlarge w3-text-red"><b>Question 4 *</b></h1>
+		<h2>(2 points)</h2>
+		<hr style="width:50px;border:5px solid red" class="w3-round">
+	  <p>Normalement, lorsque le vaisseau touche une étoile, le score ne devrait être mis à jour qu'une fois. Par exemple si le vaisseau touche une étoile verte, il gagne 1 point, une seule fois. Actuellement un bug fait qu'un point est ajouté tout le temps que l'étoile traverse le vaisseau.</p>
+	  <p>C'est la fonction <pre class="enLigne prettyprint prettyprinted" style=""><span class="pln">etoileToucheVaisseau</span></pre>
+		qui s'occupe de déterminer si une étoile donnée touche le vaisseau.
+		Normalement l'étoile ne doit toucher le vaisseau que lorsqu'elle
+		touche son bord droit, c'est-à-dire que :
+		<ul>
+		  <li>
+			son <tt>x</tt> vaut X_VAISSEAU + (LONGUEUR_VAISSEAU / 2), et que
+		  </li>
+		  <li>
+			son <tt>y</tt> est distant d'au plus (HAUTEUR_VAISSEAU / 2) pixels du <tt>y</tt>
+			du vaisseau.
+		  </li>
+		</ul>
+	  </p>
+	  <p>
+		Dans la fonction <pre class="enLigne prettyprint prettyprinted" style=""><span class="pln">testEtoileToucheVaisseau</span></pre>,
+		tous les tests unitaires passent alors que l'un d'entre eux ne devrait pas.
+		Corrigez ce test unitaire erroné, pour mettre en évidence le bug.
+		Les tests ne doivent donc plus passer au lancement du jeu.
+	  </p>
+
+		<h1 id="Q5" class="w3-xxxlarge w3-text-red"><b>Question 5 **</b></h1>
+		<h2>(3 points)</h2>
+		<hr style="width:50px;border:5px solid red" class="w3-round">
+	  <p>Corrigez le bug décrit à la question précédente :
+		les tests unitaires doivent passer à nouveau.</p>
+	  
+		<h1 id="Q6" class="w3-xxxlarge w3-text-red"><b>Question 6 *</b></h1>
+		<h2>(2 points)</h2>
+		<hr style="width:50px;border:5px solid red" class="w3-round">
+	  <p>Les étoiles blanches modifient le score, alors qu'elles ne devraient pas.
+		Dans la fonction <pre class="enLigne prettyprint prettyprinted" style=""><span class="pln">testMiseAJourScore()</span></pre>,
+		ajoutez un test unitaire pour mettre en évidence le bug.
+		Les tests ne doivent plus passer au lancement du jeu.</p>
+
+		<h1 id="Q7" class="w3-xxxlarge w3-text-red"><b>Question 7 **</b></h1>
+		<h2>(2 points)</h2>
+		<hr style="width:50px;border:5px solid red" class="w3-round">
+	  <p>Corrigez le bug mentionné dans la question précédente.
+		Les tests doivent passer à nouveau.</p>
+
+
+
+		<h1 id="Q8" class="w3-xxxlarge w3-text-red"><b>Question 8 **</b></h1>
+		<h2>(3 points)</h2>
+		<hr style="width:50px;border:5px solid red" class="w3-round">
+	  <p>Lorsqu'une étoile sort par la gauche, elle disparaît de l'écran,
+		et aucune nouvelle étoile n'apparaît par la droite.</p>
+	  <p>
+		Écrivez le code de la fonction <pre class="enLigne prettyprint prettyprinted" style=""><span class="pln">void regenerer(int i)</span></pre> qui :
+		<ul>
+		  <li>teste si l'étoile numéro i est sortie de l'écran par la gauche, et</li>
+		  <li>si c'est le cas, regénère une étoile à droite telle que :
+			<ol>
+			  <li>on utilise le même numéro d'étoile que celle qui est sortie (on la remplace),</li>
+			  <li>son <tt>x</tt> est la largeur de l'écran,</li>
+			  <li>son <tt>y</tt> et sa couleur sont aléatoires (comme c'est fait à l'initialisation du jeu)</li>
+			</ol>
+		  </li>
+		</ul>
+	  </p>
+		
+		<h1 id="Q9" class="w3-xxxlarge w3-text-red"><b>Question 9 ***</b></h1>
+		<h2>(2 points)</h2>
+		<hr style="width:50px;border:5px solid red" class="w3-round">
+	  <p>On souhaite pouvoir faire défiler les étoiles plus vite, sans
+		pour autant modifier le framerate. Pour cela, on souhaite modifier
+		<tt>afficherEtoiles()</tt> en remplaçant l'instruction
+		<pre class="enLigne prettyprint prettyprinted" style=""><span class="pln">xEtoile[i]--;</span></pre> par
+		<pre class="enLigne prettyprint prettyprinted" style=""><span class="pln">xEtoile[i] -= 4;</span></pre>.
+		Expliquez (dans le commentaire de cette fonction prévu à cet effet)
+		quel nouveau problème cela pose dans le jeu, et comment cela peut être résolu.
+	  </p>
+
+		<h1 id="Q10" class="w3-xxxlarge w3-text-red"><b>Question 10 ***</b></h1>
+		<h2>(3 points)</h2>
+		<hr style="width:50px;border:5px solid red" class="w3-round">
+	  <p>Codez votre solution, proposée à la question précédente.
+		Nous vous conseillons de faire une copie de votre code avant d'attaquer cette question.</p>
+
+	  
+		<h1 id="Q11" class="w3-xxxlarge w3-text-red"><b>Question bonus ***</b></h1>
+		<h2>(1 point)</h2>
+		<hr style="width:50px;border:5px solid red" class="w3-round">
+	  <p>
+		Écrire une fonction <pre class="enLigne prettyprint prettyprinted" style=""><span class="pln">boolean deuxEtoilesAuMemeEndroit()</span></pre>
+		qui renvoie vrai si (au moins) deux étoiles,
+		parmi toutes celles générées,
+		ont les mêmes coordonnées (on ne tient pas compte de leur couleur).
+	  </p>
+</div>	
+</div>
+
+
+
+
+
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML =  element.alt;
+}
+</script>
+
+</body>
+</html>
+

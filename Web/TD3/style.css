@@ -1,0 +1,49 @@
+.red {color: red;}
+.bold {background-color: #A0A0A0;font-weight: bold;}
+.produits {list-style: square;}
+.marge {margin-top: 40px; margin-bottom: 20px; margin-left: 25px;}
+.sansrond {list-style-type: none;}
+.cadre {    
+    border: 2px;
+    border-color: pink; 
+    border-style:solid; 
+    margin: 10px; 
+    padding-left: 20px; 
+    padding-left: 20px; }
+    
+header {position : relative ; }
+body{background-color: aqua; }
+
+
+p {font-weight: bold; line-height: 1.3em;}
+img {position : absolute; top : 0px ;right : 0px;}
+
+article h3 {font-style: italic; color : #395699; padding-left: 5px;}
+
+menu ul {display: flex; justify-content: space-around;}
+menu ul li a {
+    text-decoration: none;
+    border: 1px solid pink;
+    border-radius: 10px;
+    padding-right: 10px;
+    padding-left: 5px;
+    padding-top: 5px; 
+    padding-bottom: 5px;
+    background: white;
+    font-size: large; }
+
+
+div#boutique div{ 
+    border: 1px solid pink;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px; 
+    padding-bottom: 5px;
+    background: white;
+    font-size: large; 
+    width : 48%; }
+div#boutique h3{justify-items: center; }
+div#boutique{display: flex; justify-content: space-around; }
+div#boutique div h3 {display: flex; justify-content: center; }
+
+footer {display: flex; justify-content: space-around; }

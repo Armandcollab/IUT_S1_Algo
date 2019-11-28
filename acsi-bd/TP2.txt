@@ -1,0 +1,106 @@
+            TP2 Base De Donnée
+
+PARTIE 1 : Agregation 
+
+Q1) Nombre d’éditeurs (111)
+Requête SQL :
+SELECT COUNT(Code_Editeur) as NbEditeur
+FROM Editeur 
+
+Q2) Nombre d’enregistrements de plus de 10 minutes (801)
+Requête SQL : 
+SELECT COUNT(*)
+FROM Enregistrement
+WHERE Durée_Seconde > 600000
+
+Q3) Plus longue et plus courte durée d'un enregistrement (en secondes) (max = 2906 sec, min = 0 sec)
+Requête SQL : 
+SELECT MAX(Durée_Seconde)/1000 as DuréeMaxSec , MIN(Durée_Seconde)/1000 as DuréeMinSec
+FROM Enregistrement
+
+Q4) Durée totale des enregistrements en minutes (56 866 min)
+Requête SQL :
+SELECT SUM(Durée_Seconde/6000) as SommeTotalMin
+FROM Enregistrement
+
+Q5) Prix total des enregistrements (218 773 euros)
+Requête SQL : 
+SELECT SUM(Prix) as PrixTotal
+FROM Enregistrement
+
+PARTIE 2 : Regroupement
+
+Q1) Nombre d'enregistrements par prix de vente (30 lignes, 498 enregistrements à 6 euros)
+Requête SQL : 
+SELECT COUNT(Code_Enregistrement) as NbTotalEnregistrement, Prix
+FROM Enregistrement
+GROUP BY Prix 
+ORDER BY Prix
+
+Q2) Nombre d’œuvres par année (350 lignes, 9 œuvres en 1260)
+Requête SQL : 
+SELECT COUNT(Code_Oeuvre) as NbOeuvre, Année
+FROM Oeuvre
+GROUP BY Année 
+ORDER BY Année
+
+Q3) Même chose en ne conservant que les années où plus de trois œuvres ont été publiées (228 lignes)
+Requête SQL :
+SELECT COUNT(Code_Oeuvre) as NbOeuvre, Année
+FROM Oeuvre
+GROUP BY Année HAVING COUNT(Code_Oeuvre)>3 
+ORDER BY Année
+
+Q4) Nombre d’œuvres par tonalité, classées par nombre décroissant, en ne gardant que les œuvres dont la tonalité est spécifiée (46 lignes, 97 œuvres en 'do majeur')
+Requête SQL : 
+SELECT COUNT(Code_Oeuvre) as NbOeuvre, Tonalité
+FROM Oeuvre
+GROUP BY Tonalité HAVING Tonalité IS NOT NULL
+ORDER BY Tonalité DESC
+
+Q5) Nombre d’œuvres par année, en ne tenant compte que des œuvres ayant une tonalité spécifiée (à choisir) (par exemple, en do mineur : 37 lignes, 2 œuvres en 1710)
+Requête SQL : 
+SELECT COUNT(Code_Oeuvre) as NbOeuvre , Année, Tonalité 
+FROM Oeuvre
+GROUP BY Année,Tonalité 
+	HAVING Tonalité = 'do mineur'
+ORDER BY Année
+
+PARTIE 3 : Agregation et Regroupement
+
+Q1) Nombre d'albums regroupés par année de parution (59 lignes)
+Requête SQL :
+SELECT COUNT(Code_Album) as NbAlbum , Année_Album
+FROM Album
+GROUP BY Année_Album
+ORDER BY Année_Album
+
+Q2) Nombre d'albums regroupés par année de parution, classés par ordre décroissant d'année (59 lignes)
+Requête SQL : 
+SELECT COUNT(Code_Album) as NbAlbum , Année_Album
+FROM Album
+GROUP BY Année_Album
+ORDER BY Année_Album DESC
+
+Q3) Même chose en ne conservant que les années où plus de 30 albums sont répertoriés, par ordre décroissant du nombre d'albums (6 lignes)
+Requête SQL :
+SELECT COUNT(Code_Album) as NbAlbum , Année_Album
+FROM Album
+GROUP BY Année_Album HAVING COUNT(*)>30
+ORDER BY NbAlbum DESC
+
+Q4) Durée totale des enregistrements (en secondes) (3 412 016 sec)
+Requête SQL : 
+SELECT SUM(Durée_Seconde/1000) as DuréeTotaleSec
+FROM Enregistrement
+
+Q5) Plus longue et plus courte durée des enregistrements (en minutes et secondes) (plus longue = 48 min 26 sec, plus courte = 0 min 0 sec)
+Requête SQL : 
+SELECT MAX(Durée_Seconde)/60000.0 as DuréeMaxMinSec , MIN(Durée_Seconde)/60000.0 as DuréeMinMinSEC
+FROM Enregistrement
+
+Q6) Nombre de prénoms de musiciens différents (1 143)
+Requête SQL : 
+SELECT Prénom_Musicien 
+FROM Musicien
+GROUP BY Prénom_Musicien HAVING Prénom_Musicien IS NOT NULL

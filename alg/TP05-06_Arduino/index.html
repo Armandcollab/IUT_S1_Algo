@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html>
+<title>TP Tableaux / Arduino</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="http://www.informatics-tech.com/highlighter/prettify.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js' type='text/javascript'></script>
+<script src="http://www.informatics-tech.com/highlighter/prettify.js"></script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+<style>
+table tr th,td{
+  border:1px solid black;
+} 
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size:16px;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+.ajout-oga {background-color: green;}
+.todo-oga {background-color: red;}
+.nicho-modif{border-left: Lime 5px solid;padding-left: 5px;background: yellow;}
+</style>
+<body>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+  <div class="w3-container">
+    <h3 class="w3-padding-64"><b>IUT info Bdx</b></h3>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Intro</a> 
+    <a href="#organisation" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Organisation</a> 
+    <a href="#priseenmain" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Prise en main</a> 
+    <a href="#exo1" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Ex 1 : températures</a> 
+    <a href="#exo2" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Ex 2 : musique</a> 
+    <a href="#exo3" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Ex 3 : Simon</a> 
+    <a href="#exo4" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Ex 4 : code de César</a> 
+    <a href="#exo5" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Ex 5 : jeu de la vie</a> 
+    
+  </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+  <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">&#9776;</a>
+  <span>Iut info BDX</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+
+  <!-- Header -->
+  <div class="w3-container" style="margin-top:80px" id="showcase">
+    <h1 class="w3-jumbo"><b>TP Manipulation de tableaux : </b></h1>
+    <h1 class="w3-xxxlarge w3-text-red"><b>Mise en œuvre avec Arduino</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+  </div>
+
+  <!-- Photo grid (modal) -->
+  <div class="w3-row-padding">
+    <div class="w3-half">
+    <p>Lors des deux prochaines séances de TP vous allez apprendre à
+      manipuler des tableaux (déclaration, initialisation, parcours...).
+	  Pour cela vous allez réaliser vos premiers codes exécutés sur
+      une puce. Vous allez ainsi utiliser des tableaux pour allumer des
+      diodes en fonction de la température, jouer de la musique,
+      déchiffrer des phrases chiffrées...</p>
+      <p>Arduino, et son récent synonyme Genuino2, est une marque qui
+      couvre des cartes matériellement libres sur lesquelles se trouve
+      une puce (d'architecture Atmel AVR comme l'Atmega328p, et
+      d'architecture ARM comme le Cortex-M3 pour l'Arduino Due). Le
+      microcontrôleur peut être programmé pour analyser et produire
+      des signaux électriques, de manière à effectuer des tâches très
+      diverses comme la domotique (le contrôle des appareils
+      domestiques - éclairage, chauffage…), le pilotage d'un robot, de
+      l'informatique embarquée, etc. (définition Wikipedia)
+	  </p>
+	  
+    </div>
+
+    <div class="w3-half">
+      <img src="img/arduino.gif">
+    </div>
+  </div>
+
+  <!-- Modal for full size images on click-->
+  <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+    <span class="w3-button w3-black w3-xxlarge w3-display-topright">&times;</span>
+    <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+      <img id="img01" class="w3-image">
+      <p id="caption"></p>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <div class="w3-container" id="organisation" style="margin-top:75px">
+	<h1 class="w3-xxxlarge w3-text-red"><b>Organisation</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <p>Il y a 5 exercices :
+	  <ul>
+		<li>les exercices 1 et 2 sont à faire la première semaine (ainsi que la prise en main),</li>
+		<li>l'exercice 3 est à faire la deuxième semaine,</li>
+		<li>les exercices 4 et 5 sont facultatifs et peuvent être faits en
+		  tutorat et Prog++.
+	  </ul>
+	  Pour la remise sur Moodle, vous remettrez un fichier par exercice,
+	  qui contiendra le code de votre montage (comme d'habitude avant le début
+	  de la séance suivante). 
+	</p>
+  </div>
+
+  <div class="w3-container" id="priseenmain" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Prise en main</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <p>Les deux prochaines séances de TP vont se dérouler de la même manière : 
+
+    <ul>
+    <li>Vous vous connectez sur votre espace personnel <a href="https://www.tinkercad.com/">tinkercad</a> (si vous n'en avez pas, choisissez "S'inscrire" puis "Créer un compte personnel").</li>
+    <li>Vous lisez l'énoncé de l'exercice.</li>
+    <li>Vous dupliquez le plan de montage Arduino  dans votre espace de travail (bouton "Duplicate Project" tout en bas).</li>
+    <li>Vous répondez aux questions posées en codant directement dans la page web et testez sur l'émulateur.</li>
+    <li>Vous pouvez également réserver un kit sur <a href="https://intranet.iut.u-bordeaux.fr/glpi/front/reservationitem.php">ce site</a>, venir le chercher en salle 308 et tester chez vous votre code.</li>
+    </ul>
+    </p>
+    
+    <h2>L'émulateur</h2>
+    <p>
+    Nous allons commencer par prendre en main l'émulateur.
+    <br>
+    <video width="640" height="480" controls>
+    <source src="video/arduino-1.m4v" type="video/mp4">  
+    Your browser does not support the video tag.
+    </video>
+    </p>
+    <!-- <p>
+    Vous pouvez tester ce circuit ci-dessous en appuyant sur "start
+    simulation" puis en faisant un appui (environ 3 secondes) sur le
+    bouton pour voir les diodes s'allumer/s'éteindre.
+    <br>
+
+    <iframe frameborder='0' height='448' marginheight='0' marginwidth='0' scrolling='no' src='https://www.tinkercad.com/things/cOk1DisSkxE' width='650'></iframe>
+    </p> -->
+    <ul>
+      <li>Dupliquez <a href="https://www.tinkercad.com/things/cOk1DisSkxE-circuit-de-base-diodes-pour-expliquer-arduino">ce montage</a> et importez-le dans votre espace de travail en ligne <a href="https://www.tinkercad.com/">tinkercad</a> (Copier et éditer).</li>
+      <li>La partie centrale contient le plan de montage. Vous pouvez zoomer, déplacer le schéma, changer les couleurs des fils, les débrancher... (appuyer sur "Edit" si vous n'êtes pas en mode édition).</li>
+      <li>La partie à droite est celle où vous mettrez votre code (cliquer sur "Code" si la partie à droite n'est pas affichée).</li>
+      <!--<li>Attention : parfois l'éditeur n'est pas l'éditeur de code, mais l'éditeur Scratch. Dans ce cas, il faut cliquer sur le bouton "Block" bleu pour
+		passer à l'éditeur de code.
+	  </li>-->
+      <li>Il y a deux fenêtres à activer : le debugger (icône de bug, pour faire du pas à pas lors de l'exécution) et le moniteur série (en bas) permettant de voir les affichages (via Serial.print("texte");). Pour voir le contenu d'une variable, il suffit de passer la souris dessus.</li>
+      <li>Le code est automatiquement sauvegardé dès qu'il est modifié.</li>
+	  <li> Lorsque le code s'exécute vous ne pouvez pas le
+	  modifier : il faut l'arrêter via le bouton "Stop
+	  simulation".</li>
+    <li>Vous pouvez également ajouter des composants électriques à votre circuit. Mais vous n'en aurez pas besoin lors de ces deux séances. Vous n'aurez pas non plus besoin de comprendre la partie "génie électrique". Seule la partie développement nous intéresse ici.</li>
+    </ul>
+    </p>
+
+   
+     <h2>Savoir lire un circuit Arduino</h2>
+
+     <p>Même si c'est très intéressant nous ne vous demandons pas, ici
+     en TP, de comprendre le pourquoi du comment du montage. En tant
+     qu'informaticien, il vous faut simplement comprendre comment
+     récupérer une information (par exemple ici le fait qu'on appuie
+     ou que l'on relâche le bouton) mais également comment envoyer une
+     information à un composant du circuit (ici allumer ou éteindre
+     une diode).</p>
+
+     <p>Nous utiliserons les deux types de bornes de l'arduino :
+       <ul>
+	 <li>les bornes numériques ("digital"), numérotées de 0 à 13, en haut de la carte. Chaque borne peut être utilisée en entrée ou en sortie (via l'instruction <tt>pinMode</tt>).
+	 </li>
+	 <li>les bornes analogiques ("analog in"), numérotées de A0 à A5, en bas à droite. Elles sont uniquement utilisées en entrée.</li>
+       </ul>
+     </p>
+     
+     <p>Dans ce circuit, ce qui va nous intéresser c'est l'endroit où
+     sont placés les fils verts. La diode verte est reliée à la borne
+     numéro 3 de la carte. Les deux autres diodes sont connectées aux
+     bornes 4 et 5. Le bouton est quant à lui, relié à la borne 2.</p>
+
+     <p><img width=70% src="img/tuto.png"> </p>
+  </div>
+  
+<h2>La structure d'un code source</h2>
+ 
+ <p>En écrivant le code source adéquat, il est possible de gérer les évènements (savoir qu'une personne a appuyé sur le bouton). Il est également possible de donner des instructions aux composants (dire à une diode de s'allumer).
+</p>
+
+<p>Comme en Processing, le code pour parler à un Arduino (ou l'écouter) se fait à l'aide de deux fonctions :
+<pre class="prettyprint">
+// Première fonction appelée une et une seule fois au lancement
+// Permet d'initialiser le fonctionnement des composants
+// Lors des TP cette fonction devrait ressembler presque toujours au code ci-dessous. 
+void setup() {
+  //vitesse de connection à l'Arduino
+  Serial.begin(9600);
+  //rédaction de vos tests unitaires
+  Serial.println("tests : debut");
+  Serial.println("dechiffreUnChiffre");
+  Serial.println(dechiffreUnChiffre(1, 2) == 3);
+  Serial.println(dechiffreUnChiffre(1, 9) == 0);
+  // ...
+  Serial.println("tests : fin");
+  // configuration des composants
+}
+</pre>
+et
+<pre class="prettyprint">
+// Fonction qui s'exécute en boucle tant que vous n'arrêtez pas la simulation
+void loop() 
+</pre>
+
+</p>
+
+
+
+<p>
+Dans l'exemple ci-dessous dans la fonction "setup" il faut indiquer,
+pour chaque broche (en anglais <em>pin</em>), si elle va commander un composant ou si elle va
+permettre de récupérer une information.
+<pre class="prettyprint">
+// déclaration des variables qui seront utilisées dans Loop
+int state;
+// Première fonction appelée une et une seule fois au lancement
+void setup() {
+  Serial.begin(9600); // connection à 9600 bauds avec l'Arduino 
+  // Initialisation des composants branchés sur la carte
+  pinMode(3, OUTPUT); // on enverra des informations à la diode branchée sur la broche 3
+  pinMode(4, OUTPUT); // on enverra des informations à la diode branchée sur la broche 4
+  pinMode(5, OUTPUT); // on enverra des informations à la diode branchée sur la broche 5
+  pinMode(2, INPUT); // on recevra des informations du bouton branché sur la broche 2
+  Serial.print("session démarrée"); // affichage sur le serial Monitor
+}
+
+// Fonction qui s'exécute en boucle tant que vous n'arrêtez pas la simulation
+void loop() {
+
+  state = digitalRead(2); // lecture sur la broche 2 (répond HIGH ou LOW)
+  // si appui sur bouton alors state vaut HIGH
+  if (state == HIGH)
+  {
+      // Allume les diodes rouges
+      digitalWrite(5, HIGH); 
+      digitalWrite(4, HIGH); 
+      // Eteint la diode verte
+      digitalWrite(3, LOW);
+      // Attendre une seconde 
+      delay(1000);              
+  }
+  else {
+      digitalWrite(5, LOW); 
+      digitalWrite(4, LOW); 
+      digitalWrite(3, HIGH);
+  }
+  delay(1000);      
+}   
+</pre> 
+
+</p>
+
+<p > <img width="50px" src="img/attention.png">  Le code est en C++, pas en Java. Ça ne changera pas grand chose ici.
+  Voici les principales différences que vous rencontrerez :
+<pre class="prettyprint">
+// Le mot-clé "const" indique simplement qu'une variable est constante,
+// comme le fait "final" en Java. Ici l'entier FREQ restera toujours à 200. 
+// En général on écrit ces variables en majuscules.
+const int FREQ = 200;
+
+// les tableaux se déclarent légèrement différemment (position des []) :
+char tabCaracteres[64]; // déclaration d'un tableau de 64 caractères, sans initialisation
+int tabEntiers[] = {5, 1, 3}; // déclaration avec initalisation
+      </pre>
+</p>
+
+
+<p>Pour vous entraîner à trouver facilement les entrées et sorties
+d'un montage arduino, réalisez ce petit exercice. Tout d'abord
+dupliquez <a href="https://www.tinkercad.com/things/7hiEeuJFcyI-copy-of-light-sensor/editel">le
+schéma suivant</a>. Il est constitué de 3 composants photosensibles
+qui retournent une valeur propotionnelle à l'intensité lumineuse
+qu'elle capte. En haut à gauche est positionnée une LED RGB capable de
+générer une lumière à partir de 3 valeurs qui lui sont indiquées. La
+patte de gauche est celle de la composante rouge, la troisième en
+partant de la gauche est celle du bleu et la plus à droite est celle
+du vert.  La vidéo suivante illustre le résultat final obtenu.
+
+<video width="640" height="480" controls>
+<source src="video/light.m4v" type="video/mp4">  
+Your browser does not support the video tag.
+</video>
+
+</p>
+
+
+<p>
+  
+  Dans le code qui vous est donné, il manque les numéros de PIN associés à chaque patte de la LED RGB. Il manque également le mode d'accès à ces pattes (INPUT ou OUTPUT). Etudiez le montage et complétez le code pour obtenir un résulat similaire à celui de la vidéo.
+
+</p>
+
+
+
+  <!-- Designers -->
+  <div class="w3-container" id="exo1" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Exercice 1 - Indicateur de température moyenne</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <p>Dupliquez <a href="https://www.tinkercad.com/things/icgszwN8Qh5-temperature-student">ce montage</a> sur votre espace personnel.</p>
+    <p>Une fois le code terminé, ce circuit permettra de 
+    <ul>
+      <li>récupérer 100 températures successives (via le capteur de température) ;</li>
+      <li>dans la version 1 : allumer la diode rouge si la température est supérieure à 25 degrés et la bleue sinon&nbsp;;</li>
+      <li>dans la version 2 : allumer la diode rouge si la moyenne de 100 températures est supérieure à 25 degrés, la diode bleue sinon.</li>
+    </ul>
+    </p>
+     <video width="640" height="480" controls>
+    <source src="video/temperature.m4v" type="video/mp4">  
+    Your browser does not support the video tag.
+    </video>
+    <h3>Question 1</h3>
+    <p>Complétez le code suivant en suivant les indications en commentaires. </p>
+<pre class="prettyprint">
+int tempSensor = ; // Indiquer le numéro de broche sur laquelle est branché le capteur de température (chiffre entre 0 et 5)
+
+void setup() {
+  Serial.begin(9600);
+
+  // Indiquer que les broches des diodes sont en mode OUTPUT
+  pinMode(,);
+  pinMode(,);
+  Serial.println("process start");
+}
+
+// conversion de la mesure reçue par le capteur vers une température
+// cette fonction prend en paramètre un entier (une tension) 
+// et retourne une température de type réel
+float capteurToTemperature(int valeur)
+{
+  return (((valeur * 5.0 / 1024) - 0.5) * 100.0);
+}
+
+void loop() {
+  delay(100); // juste pour avoir le temps de cliquer sur le thermomètre
+  //en fonction de l'ordinateur sur lequel vous exécutez ce code 
+  //il est possible que vous ayez à aller jusqu'à la valeur 1000.
+
+  //Comme montré sur la vidéo, lors de l'exécution, 
+  //cliquez sur le thermomètre pour faire varier la température.
+
+  // À chaque passage dans loop il faut récupérer la température  
+  int readTemp = analogRead(tempSensor);
+  // il faut convertir cette tension en température
+  ???;
+  
+  // Allumer la diode en fonction de cette valeur 
+    if (?????>25)
+    {
+       digitalWrite(,);
+       digitalWrite(,);
+    }
+    else {
+       digitalWrite(,);
+       digitalWrite(,);
+    }
+    
+  }
+</pre>
+
+			 
+<h3>Question 2</h3>
+
+<p>Pour faire la version 2, il vous faudra apporter quelques modifications à ce code :
+
+<ul>
+  <li>Créer un tableau de 100 entiers</li>
+  <li>Lors des 100 premiers passages (et uniquement les 100 premiers) dans la fonction loop il faudra stocker la température</li>
+  <li>Après ces 100 passages il faut calculer la moyenne des 100 valeurs</li>
+  <li>Allumer la diode rouge si la température moyenne est supérieure à 25 degrés, la diode bleue sinon.</li>
+</ul>
+</p>
+
+  </div>
+<!--
+EXO 2
+-->
+  
+  <div class="w3-container" id="exo2" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Exercice 2 - Musique </b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+
+<p>L'objectif de cet exercice est de pouvoir jouer une mélodie à l'aide d'un Arduino. Pour cela, téléchargez le <a href="https://www.tinkercad.com/things/8wgmisVYYAr-exo2-question1-vetu">montage suivant</a>.</p>
+
+<p> A l'aide d'un composant (buzzer) il est possible de faire jouer une mélodie à un Arduino. </p>
+<p>Une note est une fréquence jouée pendant un temps prédéterminé. La
+commande suivante permet de faire émettre un son au composant pendant
+un temps prédéterminé.</p>
+<pre class="prettyprint">
+tone(buzzerPin, frequence, duration);
+//buzzerPin : numéro de la broche sur laquelle est branché le buzzer
+//frequence : fréquence de la note
+/*note       frequence
+  c (Do#3)   262 Hz	   
+  d (Ré)     294 Hz
+  e (Mi)     330 Hz
+  f (Fa)     349 Hz
+  g (Sol)    392 Hz
+  a (La)     440 Hz
+  b (Si)     494 Hz
+*/
+//duration : durée qu'il faut jouer cette note en ms
+</pre>
+<h3>Question 1</h3>
+
+<p>Etudiez la partition suivante et écrivez le code permettant de jouer les 11 premières notes <img src="img/lune.png">.</p>
+
+<p>Pour cette question, considérez que :<ul>
+	<li>une note noire = 200ms et une blanche à 2*200ms,</li>
+	<li>après chaque note l'exécution du code doit effectuer une
+	pause (ne pas passer à la ligne de code suivante) afin que le
+	buzzer puisse effectivement jouer le son. Pensez également à
+	prévoir dans ce temps de pause un tout petit délai
+	supplémentaire afin que vous entendiez un petit blanc entre
+	deux notes successives,</li>
+	<li>la première ligne ne doit se jouer d'une et une seule fois.</li>
+	</ul>
+</p>
+
+<h3>Question 2</h3>
+
+
+<p>Vous aurez remarqué que répondre à la question précédente a été plutôt pénible. Vous avez certainement fait beaucoup de copier/coller/modifier.</p>
+
+<p>Nous vous proposons d'utiliser des tableaux afin de simplifier l'écriture d'une mélodie (notes + tempo). Reprenez le code de la question précédente, supprimez tout le code situé dans la fonction loop() et créez 3 tableaux :
+<ul>
+<li>un tableau de notes permettant de stocker les 22 lettres de la partition correspondant aux 22 notes.
+	<pre class="prettyprint">
+	  char notes [] = {????};
+	</pre>
+
+</li>
+<li>un tableau de rythme permettant de stocker les 22 rythmes (durées) des 22 notes.
+	<pre class="prettyprint">
+	  int beats [] = {????};
+	</pre>
+
+</li>
+<li>un tableau de fréquences permettant de stocker les 6 fréquences données en entête de code.
+	<pre class="prettyprint">
+	  int frequencies [] = {????};
+	</pre>
+
+</li>
+</ul>
+</p>
+
+
+<p>Créez la fonction 
+<pre class="prettyprint">
+	  int frequency(char note) 
+	</pre>
+	permettant en entrée de donner une note et en retour d'obtenir sa fréquence. Par exemple
+	<pre class="prettyprint">
+	  frequency('e');  
+	</pre>
+doit retourner la valeur 330.
+</p>
+
+<p>Maintenant écrivez le code permettant de jouer automatiquement la musique du tableau notes[] avec le rythme décrit dans le tableau beats[].</p>
+
+
+
+
+<h3>Question 3</h3>
+
+<p>Téléchargez le <a href="https://www.tinkercad.com/things/4wV4fIkvINj-exo2-question3-vetu">montage suivant</a> et exécutez-le. Le code est fait pour jouer les notes dans l'ordre dans lequel elles apparaissent dans le tableau. Malheureusement, ces notes ne sont pas dans le bon ordre. Le bon ordre est donné par le tableau ordreNotes[]. La première note à jouer est donc en case numéro 30 du tableau notes[] car le chiffre 0 apparaît dans la case 29 du tableau ordreNotes[]. </p>
+
+
+
+<p>Par contre le tableau beats[] est lui dans le bon ordre. La durée 8 est bien celle de la première note à jouer (celle en case 29). Vous suivez toujours ?</p>
+
+<p><img src="img/giphy.gif"></p>
+
+<p>Corrigez le code contenu dans la fonction loop() afin que les notes soient jouées dans le bon ordre, et découvrez la mélodie !</p>
+
+
+  </div>
+
+
+<div class="w3-container" id="exo3" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Exercice 3 - Simon </b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+
+
+<p>Fin des années 70, la société MB a produit un jeu très original et faisant travailler la mémoire. Le principe est simple. La machine est capable d'émettre une note en même temps que d'allumer une diode (c'est toujours la même note qui est associée à cette diode). À chaque tour l'objectif pour le joueur est de reproduire la suite de sons proposée par la machine. À chaque tour la machine ajoute un son. La partie s'arrête quand le joueur se trompe dans la séquence à reproduire.</p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/vLi1qnRmpe4?ecver=1" frameborder="0" allowfullscreen></iframe>
+
+<p>Nous allons recréer ce jeu à l'aide d'un Arduino.</p>
+
+
+<h3>Question 1</h3>
+<p>Téléchargez <a href="https://www.tinkercad.com/things/ldGjYpXJlDL-simon-1819-vetu">le plan suivant</a>. Il simule l'appareil permettant de jouer à "Simon".</p>
+
+<p>Une partie du code est également fournie. Prenez le temps de regarder ce code. Remarquez en particulier que :
+<ul><li>le tableau FREQ_SON[] est un tableau de 4 entiers permettant d'associer à chaque LED une fréquence sonore.</li>
+<li>le tableau sequenceSimon[] est le tableau contenant la séquence (tirée aléatoirement) de sons à reproduire.</li>
+<li>le tableau sequenceJoueur[] est le tableau dans lequel sont stockées les réponses du joueur.</li>
+</ul> 
+
+</p>
+
+
+  <p>La boucle de jeu est gérée dans loop(). Différents modes s'y enchaînent :
+    <table>
+      <tr>
+	<th>Mode</th>
+	<th>Description</th>
+      </tr>
+      <tr>
+	<td>DEBUT</td>
+	<td>effectue la séquence lumineuse de démarrage puis passe en mode AUGM_SEQ_SIMON.</td>
+      </tr>
+      <tr>
+	<td>AUGM_SEQ_SIMON</td>
+	<td>ajoute un élément à trouver. La fonction augmenteSequence() ajoute aléatoirement un chiffre entre 0 et 4 dans la première case libre du tableau sequence. Quand le tableau est plein alors on passe en mode VICTOIRE.</td>
+      </tr>
+      <tr>
+	<td>JOUE_SEQ_SIMON</td>
+	<td>joue la séquence de notes à reproduire. Au début c'est une seule note, puis deux, puis trois... Le nombre de notes à jouer à un instant donné est mémorisé dans la variable tailleSeqSimon. On passe quoi qu'il arrive en mode SAISIE_JOUEUR une fois que la séquence à reproduire par le joueur est diffusée.</td>
+      </tr>
+      <tr>
+    <td>SAISIE_JOUEUR</td>
+    <td>récupére le bouton pressé et ajoute sa réponse au tableau sequenceJoueur[]. Le nombre de réponses données à un tour donné est mémorisé dans la variable tailleSeqJoueur. On teste si on a perdu. Si oui on passe en mode ECHEC pour faire clignoter toutes les leds.
+  Si non on passe en mode AUGM_SEQ_SIMON (pour ajouter une note à reconnaître).</td>
+  </tr>
+  <tr>
+    <td>VICTOIRE</td>
+    <td>gère une animation indiquant la victoire puis revenir en début de jeu.</td>
+  </tr>
+  <tr>
+    <td>ECHEC</td>
+    <td>gère une animation indiquant la défaite puis revenir en début de jeu.</td>
+  </tr>
+</table>
+
+    Ainsi les transitions entre ces modes ont la forme suivante :
+    <img src="img/automate.svg" width="80%"/>
+    <br/>
+Vous n'avez pas besoin d'y toucher ! Vous avez simplement à coder les fonctions appelées dans loop().
+  </p>
+
+    <p>Voici le code des déclarations de constantes et variables, et la fonction setup(). Notez en particulier que, dans le code, chaque LED est identifiée par un entier entre 0 et 3, qui est différent de son pin (cf PIN_LED) :
+    </p>
+
+
+<pre class="prettyprint">
+// constantes
+const int TAILLE_SEQUENCE = 4;
+const int PIN_SON = 8; // constante pour le pin du buzzer
+const int PIN_LED[4] = {2, 3, 4, 5}; // pins des LED 0 à 3
+const int FREQ_SON[4] = {261, 329, 392, 523}; // tableau des fréquences de son
+const int DUREE = 250; // temps pour l'allumage des LED
+
+// valeurs des boutons calculées en fonction
+// du cablage (car toutes cablées sur A0)
+const int BOUTON1=1023;
+const int BOUTON2=1001;
+const int BOUTON3=980;
+const int BOUTON4=960;
+
+// les différents modes
+const int DEBUT = 0;
+const int AUGM_SEQ_SIMON = 1;
+const int JOUE_SEQ_SIMON = 2;
+const int SAISIE_JOUEUR = 3;
+const int VICTOIRE = 4;
+const int ECHEC = 5;
+
+// variables
+int reponse;
+int mode = DEBUT; // mode dans le programme
+int tailleSeqSimon = 0; // taille de la séquence à deviner
+int tailleSeqJoueur = 0; // taille de la réponse du joueur
+int sequenceSimon[TAILLE_SEQUENCE]; // tableau de la séquence à deviner
+int sequenceJoueur[TAILLE_SEQUENCE]; // tableau de la séquence de réponse du joueur
+
+void setup() {
+  randomSeed(analogRead(1)); // initialisation des nombres aleatoires
+  Serial.begin(9600);
+  // rédaction de vos tests unitaires
+  Serial.println("tests : debut");
+  // ...
+  Serial.println("tests : fin");
+  /*
+     passages des pins en mode OUTPUT
+  */
+  for (int i = 2; i < 6; i++) {
+    pinMode(i, OUTPUT);
+  }
+  pinMode(PIN_SON, OUTPUT);
+}
+</pre>
+
+
+<h3>Question 1</h3>
+
+
+<p> Complétez la fonction sonLum() qui allume une LED (l) en jouant le son associé pendant une durée (d).</p>
+<pre class="prettyprint">
+void sonLum(int l, int d){
+  digitalWrite(PIN_LED[?], HIGH);
+  tone(PIN_SON, FREQ_SON[?], ?);
+  delay(?);
+  digitalWrite(PIN_LED[?], LOW);
+  delay(d);
+}
+</pre>
+
+<p><img width="50px" src="img/attention.png"> Testez si la valeur "l" est dans le bon intervalle. Sinon affichez un message d'erreur sur Serial.
+</p>
+
+
+<h3>Question 2</h3>
+
+<p>Complétez la fonction start() permettant, comme sur la vidéo, d'allumer successivement les LED avec leurs sons respectifs. Cette fonction est appelée une seule fois au tout début du programme pour indiquer que le jeu va commencer. </p>
+<pre class="prettyprint">
+void start(){
+  for (int i = ?; i < ?; i++) {
+    sonLum(?, 300);
+  }
+}
+</pre>
+<video width="640" height="480" controls>
+    <source src="video/intro-simon.m4v" type="video/mp4">  
+    Your browser does not support the video tag.
+    </video>
+
+
+<h3>Question 3</h3>
+
+<p>Ecrivez la fonction valide() permettant, comme on le voit sur la fin de la vidéo, d'allumer successivement les LED avec leurs sons respectifs. Réalisez la séquence que vous voulez.</p>
+<pre class="prettyprint">
+void valide(){}
+</pre>
+<video width="640" height="480" controls>
+    <source src="video/gagne-simon.m4v" type="video/mp4">  
+    Your browser does not support the video tag.
+    </video>
+
+
+<h3>Question 4</h3>
+
+<p>Ecrivez la fonction lost() permettant, comme on le voit sur la fin de la vidéo, d'allumer en même temps  les LED avec un son désagréable (fréquence 65).</p>
+<pre class="prettyprint">
+void lost(){}
+</pre>
+<video width="640" height="480" controls>
+    <source src="video/perdu-simon.m4v" type="video/mp4">  
+    Your browser does not support the video tag.
+</video>
+
+
+<h3>Question 5</h3>
+
+<p>Sachant que  la fonction <pre class="prettyprint">random(int n, int m);</pre> permet de retourner un nombre entre n et m-1 (inclus), complétez la fonction 
+  <pre class="prettyprint">
+void augmenteSequenceSimon(){
+  if (tailleSeqSimon < ?) {
+    sequenceSimon[tailleSeqSimon] = random(?, ?) ; // permet un tirage mieux réparti
+  }
+  tailleSeqSimon++;
+}
+</pre> 
+permettant d'ajouter un nombre aléatoire entre 0 et 3 (inclus) dans le tableau sequenceSimon[].</p>
+
+<p>Testez votre code en exécutant les lignes ci-dessous dans setup() et vérifiez dans le "Serial Monitor" que tout fonctionne bien.
+<pre class="prettyprint">
+for (int i = 0; i < 4; i++) {
+  augmenteSequenceSimon();
+}
+for (int i = 0; i < 4; i++) {
+  Serial.println(sequenceSimon[i]);
+}
+</pre>
+</p>
+
+
+<h3>Question 6</h3>
+
+<p>Complétez la fonction 
+  <pre class="prettyprint">void ajouteReponse(int reponse){
+    sequenceJoueur[?] = ?; // intégrer reponse dans la dernière case libre du tableau
+    ?++; // augmenter la taille de la séquence de réponse
+  }</pre> 
+permettant d'ajouter l'entier reponse dans le tableau sequenceJoueur[].</p>
+
+<p>Testez votre code en exécutant dans setup() les lignes ci-dessous et vérifiez dans le "Serial Monitor" que tout fonctionne bien.
+<pre class="prettyprint">
+ajouteReponse(0);
+ajouteReponse(2);
+ajouteReponse(1);
+ajouteReponse(2);
+for (int i = 0; i < 4; i++) {
+  Serial.println(sequenceJoueur[i]);
+}
+</pre>
+</p>
+
+<h3>Question 7</h3>
+
+<p>Complétez la fonction <pre class="prettyprint">
+void joueSequenceSimon() {
+  for (int i = 0; i < ?; i++) {
+    sonLum(?[i], 500);
+  }
+}
+</pre> permettant de jouer la séquence du tableau sequenceSimon[].</p>
+<p>Testez votre code en exécutant les lignes ci-dessous et vérifiez dans le "Serial Monitor" que tout fonctionne bien.
+<pre class="prettyprint">
+for (int i = 0; i < 4; i++) {
+    augmenteSequenceSimon();
+}
+joueSequenceSimon();
+</pre>
+
+</p>
+
+
+<h3>Question 8</h3>
+<p>Complétez le code de la fonction <pre class="prettyprint">
+int testBouton() {
+  bool end = false;
+  int bouton;
+  while(!end){
+    bouton = analogRead(A0); // on lit la valeur de A0.
+    switch (bouton) {
+      case BOUTON1:
+        end = true;
+        bouton = 0;
+        break;
+      /* Faire les 3 autres boutons */
+      default:
+        break;
+    }
+  }
+  sonLum(bouton, DUREE);
+  return bouton;
+}
+</pre>
+
+permettant d'allumer la LED adéquate et de retourner le numéro du bouton pressé.
+</p>
+
+
+<h3>Question 9</h3>
+
+
+<p >Ecrivez le code de la fonction <pre class="prettyprint">
+bool perdu (){
+  int pos = 0;
+  bool lost = false;
+  while (pos < ? && ?)
+  {
+    /*TODO*/
+  }
+  return lost;
+}
+</pre>
+qui compare les tableaux sequenceSimon[] et sequenceJoueur[] et retourne "true" si les deux séquences ne sont pas identiques, "false" sinon.
+La fonction perdu() compare donc uniquement les "tailleSeqJoueur" premières réponses, pas toute la séquence !
+</p>
+
+
+<p >
+  Testez votre fonction avec le code suivant (les 3 premières lignes sont des déclarations à modifier, les autres à mettre dans setup()).
+<pre class="prettyprint">
+const int TAILLE_SEQUENCE = 3;
+int sequenceSimon[TAILLE_SEQUENCE] = {1, 2, 1};
+int sequenceJoueur[TAILLE_SEQUENCE] = {1, 2, 1};
+
+tailleSeqSimon = 3;
+tailleSeqJoueur = 3;
+Serial.println(perdu());
+</pre>
+puis 
+<pre class="prettyprint">
+const int TAILLE_SEQUENCE = 3;
+int sequenceSimon[TAILLE_SEQUENCE] = {1, 2, 2};
+int sequenceJoueur[TAILLE_SEQUENCE] = {1, 2, 1};
+
+tailleSeqSimon = 3;
+tailleSeqJoueur = 3;
+Serial.println(perdu());
+</pre>
+puis 
+<pre class="prettyprint">
+const int TAILLE_SEQUENCE = 3;
+int sequenceSimon[TAILLE_SEQUENCE] = {1, 2, 2};
+int sequenceJoueur[TAILLE_SEQUENCE] = {1, 2,-1}; // la dernière valeur est factice
+
+tailleSeqSimon = 3;
+tailleSeqJoueur = 2;
+Serial.println(perdu()); // doit renvoyer faux
+</pre>
+</p>
+
+<p>Normalement tout devrait fonctionner.</p>
+
+<!-- End page content -->
+
+	</p>
+
+</div>
+
+
+<div class="w3-container" id="exo4" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Exercice 4 - Code de César </b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+<h3>Principe</h3>
+
+<p>
+Le code de César est un code permettant de chiffrer un message composé de chiffres. Nous considérons ici une version simplifiée du code de César.
+Le principe est simple. À chaque chiffre du message d’origine est soustrait un chiffre d’une clef secrète que seuls l’émetteur et le récepteur connaissent.
+Par exemple, si l’on considère la clef de chiffrement : </p>
+<table>
+  <tr>
+    <td>1</td>
+    <td>2</td> 
+    <td>0</td>
+  </tr>
+</table>
+ainsi que le message non chiffré : 
+<table>
+  <tr>
+    <td>3</td>
+    <td>4</td> 
+    <td>1</td>
+    <td>2</td>
+    <td>2</td>
+    <td>5</td>
+    <td>5</td>
+    <td>4</td>
+  </tr>
+</table>
+<p>
+Alors, le message se chiffre de la manière suivante. On place la clef sous le message sur le premier caractère et on
+soustrait les chiffres un à un.</p>
+
+<table>
+  <tr>
+    <td>3</td>
+    <td>4</td> 
+    <td>1</td>
+    <td>2</td>
+    <td>2</td>
+    <td>5</td>
+    <td>5</td>
+    <td>4</td>
+  </tr>
+
+  <tr>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  </tr>
+  <tr>
+  <td>1</td>
+  <td>2</td>
+  <td>0</td>
+  </tr>
+  <tr>
+  <td>=</td>
+  <td>=</td>
+  <td>=</td>
+  </tr>
+  <tr>
+  <td>2</td>
+  <td>2</td>
+  <td>1</td>
+  </tr>
+</table>
+<p>On déplace ensuite la clef, car tous les chiffres ne sont pas encore chiffrés. </p>
+
+<table>
+  <tr>
+    <td>3</td>
+    <td>4</td> 
+    <td>1</td>
+    <td>2</td>
+    <td>2</td>
+    <td>5</td>
+    <td>5</td>
+    <td>4</td>
+  </tr>
+
+  <tr>
+  <td> </td>
+  <td> </td>
+  <td> </td>
+
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  </tr>
+  <tr>
+   <td> </td>
+  <td> </td>
+  <td> </td>
+  <td>1</td>
+  <td>2</td>
+  <td>0</td>
+  </tr>
+  <tr>
+   <td> </td>
+  <td> </td>
+  <td> </td>
+  <td>=</td>
+  <td>=</td>
+  <td>=</td>
+  </tr>
+  <tr>
+  <td>2 </td>
+  <td> 2</td>
+  <td> 1</td>
+  <td>1</td>
+  <td>0</td>
+  <td>5</td>
+  </tr>
+</table>
+
+
+
+<p>La clef n’est pas déplacée de nouveau car tous les chiffres ont été chiffrés.</p>
+
+
+<table>
+  <tr>
+    <td>3</td>
+    <td>4</td> 
+    <td>1</td>
+    <td>2</td>
+    <td>2</td>
+    <td>5</td>
+    <td>5</td>
+    <td>4</td>
+  </tr>
+
+  <tr>
+  <td> </td>
+  <td> </td>
+  <td> </td>
+    <td> </td>
+  <td> </td>
+  <td> </td>
+
+  <td>-</td>
+  <td>-</td>
+  
+  </tr>
+  <tr>
+    <td> </td>
+  <td> </td>
+  <td> </td>
+   <td> </td>
+  <td> </td>
+  <td> </td>
+  <td>1</td>
+  <td>2</td>
+  
+  </tr>
+  <tr>
+    <td> </td>
+  <td> </td>
+  <td> </td>
+   <td> </td>
+  <td> </td>
+  <td> </td>
+  <td>=</td>
+  <td>=</td>
+
+  </tr>
+  <tr>
+  <td> 2</td>
+   <td> 2</td>
+  <td> 1</td>
+  <td> 1</td>
+  <td> 0</td>
+  <td> 5</td>
+  
+  <td>4</td>
+  <td>2</td>
+  </tr>
+</table>
+
+
+<h3>Préambule</h3>
+
+<p>Pour réaliser l'exercice ci-dessous, il vous faut comprendre que les caractères (char) sont en fait "codés" en mémoire sous la forme d'entiers.
+</p>
+<p><img src="img/ascii.png"></p>
+<p>Le code ci-dessous vous explique comment manipuler les caractères et les transformer en entiers.</p>
+<pre class="prettyprint">
+char carac1 = '0';
+char carac2 = '1';
+char carac3 = '2';
+char carac4 = '.';
+char carac5 = ',';
+
+int val1,val2,val3,val4,val5;
+//on cast de manière explicite pour transformer un caractère en entier
+val1 = (int) carac1; //val1 vaut 48;
+val2 = (int) carac2; //val2 vaut 49;
+val3 = (int) carac3; //val3 vaut 50;
+val4 = (int) carac4; //val4 vaut 46;
+val5 = (int) carac5; //val5 vaut 44;
+</pre>
+
+
+<h3>Question 1</h3>
+
+<p>Ecrire la fonction  
+<pre class="prettyprint">
+int char2int(char carac)
+</pre>
+
+<p>En étudiant l'exemple précédent, codez cette fonction prenant en entrée un caractère représentant un chiffre (on suppose que l'utilisateur est intelligent et ne rentrera qu'une des valeurs suivantes : '0','1','2','3','4','5','6','7','8','9') et retournant l'entier correspondant. Par exemple char2int('2') retourne la valeur 2. </p>
+</p>
+<p>Dupliquez ce <a href="https://www.tinkercad.com/things/8LFYtNuQ5L7-cesarvetu">montage</a>. Codez et testez votre fonction.</p>
+<!-- https://www.google.fr/maps/place/26%C2%B021'28.4%22N+127%C2%B047'01.6%22E/@26.3578671,127.5047637,129285m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d26.357891!4d127.78378 -->
+
+<h3>Codage de la fonction principale</h3>
+
+<p>Vous souhaitez faire parvenir les coordonnées d'un lieu hautement secret (et recherché de tous depuis plusieurs décennies) à la seule et unique personne en qui on peut avoir confiance dans ce bas monde.</p>
+
+<p> <img src="img/chuck.jpg"></p>
+<!-- W3.CSS Container -->
+
+
+<p>Pour lui envoyer l'information vous décidez de chiffrer les coordonnées GPS de ce lieu en utilisant le code de César.
+Par exemple, si le lieu secret était celui de l'IUT. Les coordonnées sont  : latitude=48.862725 et longitude=2.287592 .
+Il vous faut donc chiffrer la chaine "48.862725,2.287592". Vous choisissez la clef 102. Le message chiffré devient donc : "38.652515,0.185490".
+</p>
+
+<p>Vous décidez donc :
+
+<ul>
+  <li>d'envoyer les coordonnées du lieu secret (via un pigeon voyageur) "16.2477,026.6826"</li>
+  <li>d'envoyer la clef de décodage (via un second pigeon voyageur) "101"</li>
+  <li>un mail avec un lien vers la page wikipedia du code de César pour que Chuck arrive à déchiffrer les coordonnées.</li>
+</ul></p>
+
+
+
+<p>Chuck vous répond quelques jours plus tard qu'il a bien tout reçu mais qu'il n'arrive pas à appliquer tout seul l'algorithme de déchiffrement.</p> 
+<p><img src="img/chuck.gif"></p>
+<p>Vous vous décidez donc à créer un petit boîtier contenant un pad numérique pour l'envoyer à Chuck. Ce pad numérique permettra à Chuck de taper la clef (en terminant la séquence par #). Les coordonnées GPS (au format chiffré) seront encodées dans la mémoire du boîtier. Après avoir tapé la clef (taille inconnue), un algorithme effectuera le déchiffrement et affichera sur un écran les coordonnées non chiffrées (cf vidéo).</p>
+
+<video width="640" height="480" controls>
+    <source src="video/decodeur.m4v" type="video/mp4">  
+    Your browser does not support the video tag.
+    </video>
+
+
+    <p>Si tout fonctionne bien, à la fin de l'exercice vous devriez tomber sur la localisation suivante :</p><p> <img src="img/lieu.png" width="400px">.</p>
+    <p>Mettez-vous en mode satellite, zoomez et découvrez qui se cache à cet endroit :)</p>
+	
+    <p><img width="50px" src="img/attention.png"> Au moment où je rédige ce support de TP j'ai remarqué un bug aléatoire. Dans le simulateur, après une erreur de compilation il se peut que l'écran LCD n'affiche plus rien. Lors de l'exécution, il suffit de tourner le potentiomètre et le message apparaitra de nouveau.</p>
+
+
+
+
+<h3>Question 2</h3>
+
+<p>Dans la fonction setup, écrivez les trois lignes permettant : 
+
+<ul>
+  <li>d'indiquer que l'écran contient 2 lignes et 16 colonnes (<a href="https://www.Arduino.cc/en/Reference/LiquidCrystalBegin">lire la documentation</a>),</li>
+  <li>d'indiquer que lorsque l'on écrira une chaîne de caractère sur l'écran cela sera fait à partir de la ligne 0/colonne 0 (<a href="https://www.Arduino.cc/en/Reference/LiquidCrystalSetCursor">lire la documentation</a>),</li>
+
+  <li>d'afficher "Entrer le code" sur l'écran LCD. (<a href="https://www.Arduino.cc/en/Reference/LiquidCrystalPrint">lire la documentation</a>).</li>
+
+</ul></p>
+
+<h3>Question 3</h3>
+
+<p>Ecrivez la fonction <pre class="prettyprint">
+  void ajouterClef(char val)
+</pre> qui ajoute le caractère contenu dans la variable "val" à la fin du tableau clef[];</p> 
+
+
+<h3>Question 4</h3>
+<p>Complétez le code de la fonction loop() afin que chaque chiffre saisi au clavier s'affiche (en seconde ligne) au fur et à mesure.</p>
+
+
+<h3>Question 5</h3>
+<p>Complétez la fonction <pre class="prettyprint">
+  void effacerEcran()
+</pre>  permettant d'effacer tout l'écran LCD.</p>
+
+<h3>Question 6</h3>
+<p>Ecrire la fonction <pre class="prettyprint">int dechiffreUnChiffre(int valChiffree, int chiffreClef)</pre> et les tests unitaires qui vont avec. Il faut faire attention au cas où la somme dépasse 10. Par exemple dechiffreUnChiffre(2,9) donne 1.</p>
+
+<h3>Question 7</h3>
+
+<p>Complétez la fonction <pre class="prettyprint">
+  void decodeGPSCoord()
+  </pre>  permettant de déchiffrer le message chiffré contenu dans le tableau messageChiffre[] avec la clef (de taille inconnue) contenue après saisie au clavier dans le tableau clef[]. Attention, il ne faut pas appliquer la soustraction sur les caractères '.' et ','.</p>
+
+
+
+
+
+
+	
+</div>
+
+
+
+<div class="w3-container" id="exo5" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Exercice 5 - Le jeu de la vie </b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+<h3>Principe</h3>
+
+	<p>Par défaut le jeu de la vie (sur une grille 2D) selon Conway suit les règles suivantes :
+	  <ul>
+		<li> Une cellule morte possédant exactement trois voisines vivantes devient vivante.</li>
+		<li>Une cellule vivante possédant deux ou trois voisines vivantes reste vivante, sinon elle meurt.</li>
+		<li>La grille est thorique. Cela signifie que si l'on se situe sur la ligne numéro 0 (tout en bas) alors la ligne du dessous est en fait ligne 7 (tout en haut). De la même manière, la colonne à droite de la colonne 7 est la colonne numéro 0 (dans le cas d'un damier 8X8).</li>
+	  </ul>
+	</p>
+
+<p>La vidéo ci-dessous illustre ce que cela donne avec une grille de plus grande taille.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xP5-iIeKXE8?ecver=1" frameborder="0" allowfullscreen></iframe>
+
+<p>Regardons maintenant un cas concret sur une grille 8X8.</p>
+
+<table>
+  <tr>
+    <th style="background:green;"> </th>
+    <th style="background:purple;">X</th> 
+    <th>X</th>
+    <th> </th>
+    <th> </th>
+    <th>X</th>
+    <th>X</th>
+    <th style="background:purple;"> </th>
+  </tr>
+
+  <tr>
+  <th style="background:purple;"> </th>
+  <th style="background:purple;">X</th>
+  <th> </th>
+  <th>X</th>
+  <th>X</th>
+  <th>X</th>
+  <th> </th>
+  <th style="background:purple;"> </th>
+  
+  </tr>
+  <tr>
+  <th> </th>
+  <th>X</th>
+  <th> </th>
+  <th>X</th>
+  <th>X</th>
+  <th> </th>
+  <th>X</th>
+  <th>X</th>
+  </tr>
+  <tr>
+  <th>X</th>
+  <th style="background:red;"> </th>
+  <th style="background:red;"> </th>
+  <th style="background:red;">X</th>
+  <th>X</th>
+  <th>X</th>
+  <th> </th>
+  <th> </th>
+  </tr>
+  <tr>
+  <th> </th>
+  <th style="background:red;"> </th>
+  <th style="background: yellow;">X</th>
+  <th style="background:red;"> </th>
+  <th> </th>
+  <th>X</th>
+  <th> </th>
+  <th> </th>
+  </tr>
+   <tr>
+  <th> </th>
+  <th style="background:red;"> </th>
+  <th style="background:red;">X</th>
+  <th style="background:red;"> </th>
+  <th> </th>
+  <th>X</th>
+  <th> </th>
+  <th>X</th>
+  </tr>
+   <tr>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th>X</th>
+  <th>X</th>
+  <th>X</th>
+  <th>X</th>
+  <th> </th>
+  </tr>
+   <tr>
+  <th style="background:purple;"> </th>
+  <th style="background:purple;"> </th>
+  <th> </th>
+  <th> </th>
+  <th>X</th>
+  <th>X</th>
+  <th> </th>
+  <th style="background:purple;"> </th>
+  </tr>
+</table>
+<p>Une case possède 8 voisins. Par exemple, parmi ses 8 voisins (en rouge) la case jaune en possède 2 de vivants. L'espace étant infini, la case verte possède également 8 voisins (dont 2 vivants).
+<p>
+  A l'itération suivante le tableau devient :
+</p>
+<table>
+  <tr>
+    <th style="background:green;"> </th>
+    <th>X</th> 
+    <th>X</th>
+    <th> </th>
+    <th style="width:15px;"> </th>
+    <th> </th>
+    <th>X</th>
+    <th> </th>
+  </tr>
+
+  <tr>
+  <th> </th>
+  <th>X</th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th>X</th>
+  
+  </tr>
+  <tr>
+  <th> </th>
+  <th>X</th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th>X</th>
+  <th>X</th>
+  </tr>
+  <tr>
+  <th>X</th>
+  <th>X</th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th>X</th>
+  </tr>
+  <tr>
+  <th> </th>
+  <th>X</th>
+  <th style="background: yellow;">X</th>
+  <th> </th>
+  <th> </th>
+  <th>X</th>
+  <th> </th>
+  <th> </th>
+  </tr>
+   <tr>
+  <th> </th>
+  <th> </th>
+  <th>X</th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  </tr>
+   <tr>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th>X</th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  </tr>
+   <tr>
+  <th> </th>
+  <th> </th>
+  <th>X</th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  <th> </th>
+  </tr>
+</table>
+
+<p>Dupliquez le <a href="https://www.tinkercad.com/things/2Mh6LZDFVxq-jeuxdelavie-vetu/editel?sharecode=cPtCFGYV3Z6XdJE-HCyJCdjk8vOSEVTuG0jR8dTweIw=">plan de montage suivant</a>. Il cable des bandes lumineuses (8 bandes de 8 lumières). Chacune d'elles peut s'allumer/s'éteindre de manière indépendante. A la fin de l'exercice, votre jeu de la vie devrait fonctionner comme sur la vidéo ci-dessous.</p>
+<video width="640" height="480" controls>
+    <source src="video/life.m4v" type="video/mp4">  
+    Your browser does not support the video tag.
+    </video>
+    
+    <p>En lisant le code, vous remarquerez qu'il y a dejà pas mal de code présent. La façon d'allumer les lumières étant un peu technique, nous vous avons codé une fonction simplifiant cette étape. Ce que vous devez comprendre de ce code : 
+
+    <ul>
+      <li>Un tableau d'entiers <pre class="prettyprint">int pixels[numRows][pixelsPerRow]={
+{LOW, HIGH,HIGH,LOW, LOW, HIGH,HIGH,LOW},
+{LOW, HIGH,LOW, HIGH,HIGH,HIGH,LOW, LOW},
+{LOW, HIGH,LOW, HIGH,HIGH,LOW, HIGH,HIGH},
+{HIGH,LOW, LOW, HIGH,HIGH,HIGH,LOW, LOW},
+{LOW, LOW, HIGH,LOW, LOW, HIGH,LOW, LOW},
+{LOW, LOW, HIGH,LOW, LOW, HIGH,LOW, HIGH},
+{LOW, LOW, LOW, HIGH,HIGH,HIGH,HIGH,LOW},
+{LOW, LOW, LOW, LOW, HIGH,HIGH,LOW, LOW}
+};</pre> permet de mémoriser quels sont les pixels allumés/éteints à un instant donné du système.</li>
+
+<li>Un tableau d'entiers <pre class="prettyprint">unsigned long cells[pixelsPerRow][numRows];</pre></li> est un tableau indiquant quelle couleur afficher pour chaque pixel. Pour nous, une cellule morte sera rouge et une cellule vivante sera verte.
+<p><img width="50px" src="img/attention.png"> Vous aurez peut-être remarqué que pour le tableau cells[][] c'est le nombre de colonnes qui est indiqué entre les premiers crochets et le nombre de lignes dans les seconds crochets. Ceci n'est pas standard du tout (mais pas faux). En fait ce choix de conception vient du cablage.  Il n’est pas dans le même sens que le tableau pixels. Pour le cablage, la cellule [0,1] est en colonne 0, ligne 1 ( cellule entourée en noire sur la photo). Ceci est juste une remarque, vous n'avez de toutes façons pas à utiliser le tableau cells[][] dans cet exercice. </p>
+<p><img src="img/matrice.png"></p>
+
+    <li>La fonction <pre class="prettyprint">void setCell(int isLive, int row, int col);</pre> permet d'allumer la diode située en row/col en vert si la cellule correspondante est vivante, rouge sinon. Vous remarquerez que la variable isLive ne peut prendre que deux valeurs : LOW ou HIGH </li>
+
+    </ul> 
+
+
+    </p>
+
+<h3>Question 1</h3>
+<p> Ecrivez le contenu de la fonction <pre class="prettyprint">void initMatrix()</pre> 
+permettant d'initialiser le contenu du tableau cells[] à partir du contenu du tableau pixels[].
+</p>
+<p>Si votre code est correct, la grille suivante devrait apparaître</p>
+<p><img src="img/life2.png"></p>
+
+
+<h3>Question 2</h3>
+
+<p>Ecrivez le contenu de la fonction <pre class="prettyprint">int countNeighbour(int row,int col)</pre> retournant le nombre de voisins que possède une cellule localisée en ligne "row" et en colonne "col". Afin de vérifier votre réponse, comptez le nombre de voisins que retourne la fonction pour chaque pixel de la première ligne de votre tableau pixels[]. Vous devriez trouver les valeurs suivantes : 2/2/3/4/6/5/3/1</p>
+
+
+
+<h3>Question 3</h3>
+
+<p>Ecrire le contenu de la fonction 
+
+<pre class="prettyprint">
+void nextStep()
+</pre>
+permettant de faire une itération du cycle de vie de la matrice.
+</p>
+
+<p>Si votre code est correct, la grille suivante devrait apparaitre</p>
+<p><img src="img/life1.png"></p>
+
+
+</div>
+<div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px"><p class="w3-right">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></p></div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML =  element.alt;
+}
+</script>
+
+</body>
+</html>

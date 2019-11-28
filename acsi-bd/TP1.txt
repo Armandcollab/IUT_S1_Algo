@@ -1,0 +1,77 @@
+ Poujardieu Lucas  S1B
+            
+            TP1
+
+1)  Liste des noms des éditeurs triée par ordre alphabétique :  
+ commande SQL: SELECT Nom_Editeur 
+               FROM Editeur
+               ORDER BY Nom_Editeur ASC 
+
+2)  Liste des titres d'albums par ordre alphabétique décroissant (725 lignes):
+commande SQL: SELECT Titre_Album 
+              FROM Album
+              ORDER BY Titre_Album DESC
+
+3)  Liste des titres d’œuvres comportant le mot "hiver" (2 lignes):
+commande SQL: SELECT Titre_Oeuvre 
+              FROM Oeuvre
+              WHERE Titre_Oeuvre  LIKE '%hiver%'
+
+4)  Liste des enregistrements de plus de 10 minutes par durée décroissante (attention : l'attribut Durée_Seconde de la table Enregistrement contient des durées en millisecondes !...) (801 lignes):
+commande SQL: SELECT Durée_Seconde 
+              FROM Enregistrement
+              WHERE Durée_Seconde > '600000'
+
+5)  Liste des éditeurs dont le nom commence par la lettre R (2 lignes):
+commande SQL: SELECT Nom_Editeur 
+              FROM Editeur
+              WHERE Nom_Editeur like 'R%'
+
+6)  Liste des éditeurs dont le nom commence par D ou R (13 lignes):
+commande SQL: SELECT Nom_Editeur 
+              FROM Editeur
+              WHERE Nom_Editeur like 'D%' 
+                 OR Nom_Editeur like 'R%'
+7)  Liste des musiciens dont le nom commence par une lettre entre P et T (bornes comprises) (478 lignes)
+commande SQL: SELECT Nom_Musicien 
+              FROM Musicien
+              WHERE Nom_Musicien  BETWEEN 'P%' AND 'U%'
+
+8)  Liste des musiciens dont le nom contient les lettres "rs" (consécutives) (26 lignes) 
+commande SQL: SELECT Nom_Musicien 
+              FROM Musicien
+              WHERE Nom_Musicien LIKE '%rs%'
+
+9)  Liste des musiciens dont le nom contient les lettres "rs" suivies d’une (unique) lettre quelconque (1 ligne)
+commande SQL: SELECT Nom_Musicien 
+              FROM Musicien
+              WHERE Nom_Musicien LIKE '%rs_' 
+
+10) Liste des musiciens dont le nom se termine par "rson" (8 lignes)
+commande SQL: SELECT Nom_Musicien 
+              FROM Musicien
+              WHERE Nom_Musicien LIKE '%rson'
+
+11) Liste des musiciens dont le nom contient les lettres "rs" suivies de deux lettres quelconques (13 lignes)
+commande SQL: SELECT Nom_Musicien 
+              FROM Musicien
+              WHERE Nom_Musicien LIKE '%rs__'
+
+12) Liste des musiciens dont le nom contient les lettres "rs" suivies de deux lettres quelconques
+ et/ou dont la naissance est postérieure à 1950 
+ (une réponse pour "et", une réponse pour "ou") (8 lignes pour "et", 727 lignes pour "ou"):
+
+ commande SQL 1: SELECT Nom_Musicien 
+                 FROM Musicien
+                 WHERE Nom_Musicien LIKE '%rs__'
+                 AND Année_Naissance > 1950
+
+commande SQL 2: SELECT Nom_Musicien 
+                FROM Musicien
+                WHERE Nom_Musicien LIKE '%rs__'
+                OR Année_Naissance > 1950
+
+13) Liste des musiciens nés au XVIIe siècle (107 lignes)
+commande SQL: SELECT Nom_Musicien 
+              FROM Musicien
+              WHERE Année_Naissance BETWEEN 1601 AND 1700    
