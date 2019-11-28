@@ -63,13 +63,29 @@ div:nth-of-type(5n) {
   margin: 1vw;
 }
 
-@media (max-width : 1024px) {
-    div {
-        width: 48vw;
-      }
+@media (max-width: 1024px) {
+  section {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  div {
+    width: 30vw;
+  }
+  div:nth-of-type(5n) {
+    width: 30vw;
+    margin: 1vw;
+  }
+  div:nth-of-type(9n) {
+    height: 98vh;
+  }
 }
-@media (max-width : 600px) {
-    div {
-        width: 98vw;
-      }
+@media (max-width: 600px) {
+  div {
+    width: 98vw;
+  }
+  div:nth-of-type(5n) {
+    width: 98vw;
+    margin: 1vw;
+  }
 }
