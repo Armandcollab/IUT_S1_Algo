@@ -65,12 +65,12 @@ div:nth-of-type(5n) {
 
 @media (max-width: 1024px) {
   section {
-    display: flex;
-    flex-wrap: wrap;
+    height: 100vh;
     flex-direction: column;
   }
   div {
     width: 30vw;
+    height: 22.5vh;
   }
   div:nth-of-type(5n) {
     width: 30vw;
@@ -80,7 +80,13 @@ div:nth-of-type(5n) {
     height: 98vh;
   }
 }
+
+
 @media (max-width: 600px) {
+  section {
+    height: 100vh;
+    flex-direction: column;
+  }
   div {
     width: 98vw;
   }
