@@ -144,12 +144,12 @@ ul {
   padding: 0;
   margin: 0;
   height: 25vh;
-  width: 100vw;
+  width: 100%;
 }
 li {
   background-color: lightgrey;
   text-align: center;
-  width: 20em;
+  width: 100vh;
   height: 5vh;
 }
 
@@ -173,7 +173,7 @@ a {
   font-size: 16px;
   line-height: 50px;
   text-decoration: none;
-  align-items: center;                                                          defIUEIEygIEFGIEftgZUIEFG
+  align-items: center;                                                          
 }
 @media (min-width: 600px) {
   ul {
@@ -183,6 +183,7 @@ a {
     margin-top: 2vh;
   }
   li:hover {
+    padding-top: 2.5vh;;
     margin-top: 0vh;
     height: 9vh;
   }
