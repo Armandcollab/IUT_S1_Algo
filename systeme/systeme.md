@@ -98,7 +98,7 @@ ls ~>>/tmp/ls.txt
 
 - utilisation "<"
 ```
-bc <bc.txt "
+bc < bc.txt "
 ```
 
 - utilisation "<<"
@@ -257,7 +257,7 @@ utilisable dans les scrits
 ```bash
 variable=valeur 
 ```
-> <span style='color:grey'>attention pas d'espace à côté du éguale</span> 
+> <span style='color:grey'>attention pas d'espace à côté du égale</span> 
 
 - ### lire ###
 
@@ -361,7 +361,8 @@ function nom-de-la-fonction
 
 }
 ```
-  2. appeler
+  2. appeler- Générer les fichiers PDF/HTML : ./blog.sh construire
+
 ```bash
 nom-de-la-fonction paramètre(s)
 
