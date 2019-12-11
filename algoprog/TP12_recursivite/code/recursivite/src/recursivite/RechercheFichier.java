@@ -15,21 +15,42 @@ class RechercheFichier {
      * @return le nombre de ses fichiers, y compris dans ses sous-répertoires.
      */
     static int nbFichiers(String cheminRep) {
-        // TODO
-        return 0;
+        int NbFichiers = 0;
+        String[] sousReps = sousRepertoires(cheminRep);
+        if (sousReps == null) {
+            return (fichiers(cheminRep).length);
+        } else {
+            for (int i = 0; i < sousReps.length; i++) {
+                NbFichiers += nbFichiers(cheminRep + "/" + sousReps[i]);
+            }
+            return (NbFichiers + fichiers(cheminRep).length);
+        }
+
     }
 
     /**
      * Teste si un répertoire contient un fichier, directement ou indirectement
      * (dans un de ses sous-répertoires).
-     * 
+     *
      * @param cheminRep le chemin du répertoire à parcourir
      * @param nomFichier le nom du fichier à rechercher
      * @return vrai ssi un fichier avec ce nom est trouvé dans le répertoire
      */
     static boolean contientFichier(String cheminRep, String nomFichier) {
-        // TODO
-        return false;
+        String[] fichiers = fichiers(cheminRep);
+        int i = 0;
+        boolean trouve = false;
+        while (!trouve && i < fichiers.length) {
+            if (fichiers[i].equals(nomFichier)) {
+                trouve = true;
+                System.out.println("le meme");
+            }
+            System.out.println(fichiers[i]);
+            System.out.println(nomFichier);
+            System.out.println(trouve);
+            i++;
+        }
+        return trouve;
     }
 
     /**

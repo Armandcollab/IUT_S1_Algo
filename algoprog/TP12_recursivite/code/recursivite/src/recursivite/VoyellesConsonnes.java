@@ -23,7 +23,13 @@ class VoyellesConsonnes {
      * @return le nombre de voyelles du mot
      */
     static int nbVoyellesNonRec(String mot) {
-        return -1; // TODO
+        int cpt = 0;
+        for (int i = 0; i < mot.length(); i++) {
+            if(estVoyelle(mot.charAt(i))){
+                cpt ++;
+            }
+        }
+        return cpt;
     }
 
     /**

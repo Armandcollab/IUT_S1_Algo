@@ -1,7 +1,9 @@
 package recursivite;
 
 import java.io.File;
+import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
@@ -14,17 +16,27 @@ public class RechercheFichierTest {
      * Chemin vers l'arborescence de test. A adapter...
      */
     static final String RACINE
-            = "/votre/chemin/vers/rep_pour_tests"
+            = "/mnt/roost/users/aclaveau/Documents/TP/algoprog/TP12_recursivite/code/rep_pour_tests"
             + File.separatorChar;
 
     @Test
     public void testNbFichiers() {
-        // TODO
+        assertEquals(1,RechercheFichier.nbFichiers(RACINE + "rep2"));
+        assertEquals(1,RechercheFichier.nbFichiers(RACINE + "rep1/rep3"));
+        assertEquals(2,RechercheFichier.nbFichiers(RACINE + "rep1"));
+        assertEquals(5,RechercheFichier.nbFichiers(RACINE));
+        
     }
 
     @Test
     public void testContientFichier() {
-        // TODO
+        assertTrue(RechercheFichier.contientFichier(RACINE + "rep2", "fichier5"));
+        assertTrue(RechercheFichier.contientFichier(RACINE + "rep1/rep3", "fichier4"));
+        assertTrue(RechercheFichier.contientFichier(RACINE + "rep1", "fichier3"));
+        assertTrue(RechercheFichier.contientFichier(RACINE, "fichier1"));
+        assertTrue(RechercheFichier.contientFichier(RACINE, "fichier2"));
+        assertFalse(RechercheFichier.contientFichier(RACINE + "rep1", "fichier154"));
+        assertFalse(RechercheFichier.contientFichier(RACINE + "rep1/rep3", "fichier154"));
     }
 
     /**
