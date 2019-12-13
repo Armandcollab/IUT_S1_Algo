@@ -30,9 +30,20 @@ class FileGame {
             int posTrou = br.readLine().indexOf('H');
             BufferedWriter bw = new BufferedWriter(new FileWriter(FICHIER_NIVEAU));
             if (mouvement == "m") {
-                
+                if (posArro + 1 != posTrou) {
+                    bw.write("***********************************");
+                    bw.newLine();
+                    bw.write("*       H            H      H     S");
+                    bw.write('@');
+                    bw.newLine();
+                    bw.write("***********************************");
+                    bw.newLine();
+                    bw.close();
+                }else if (posArro == posSortie){
+                    return true;
+                }
             }
-
+            displayLevel();
         } catch (IOException e) {
             System.out.println("Erreur à l'utilisation du fichier : " + e);
         }
@@ -61,7 +72,7 @@ class FileGame {
      * Afficher un niveau stocké dans le fichier.
      */
     public void displayLevel() {
-        try (BufferedReader br = new BufferedReader(new FileReader(FICHIER_NIVEAU))) {
+        try ( BufferedReader br = new BufferedReader(new FileReader(FICHIER_NIVEAU))) {
 
             String line;
             while ((line = br.readLine()) != null) {
